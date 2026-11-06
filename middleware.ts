@@ -11,13 +11,11 @@ const SUBDOMAIN_STREAMERS: Record<string, { basePath: string; slug: string }> = 
   william: { basePath: "/william", slug: "william" },
   ammy: { basePath: "/ammy", slug: "ammy" },
   zen: { basePath: "/zen", slug: "zen" },
-  nutt: { basePath: "/nutt", slug: "nutt" },
   lham: { basePath: "/lham", slug: "lham" },
   kim: { basePath: "/kim", slug: "kim" },
   grace: { basePath: "/grace", slug: "grace" },
   miguel: { basePath: "/miguel", slug: "miguel" },
   top: { basePath: "/top", slug: "top" },
-  irada: { basePath: "/irada", slug: "irada" },
 };
 
 /** Subdomains ending in this suffix (e.g. holden-bonus.liveth.net) land on the
@@ -27,8 +25,8 @@ const BONUS_SUFFIX = "-bonus";
 
 /** Ad-campaign links that fan out to a random streamer page per click — lets
  * Ads point at one URL instead of one campaign/ad set per streamer. Pool is
- * exactly the 14 subdomains above. Redirects to the STREAMER'S OWN SUBDOMAIN
- * (e.g. nutt.liveth.net), not the bare apex domain — the Worker route is only
+ * exactly the 13 subdomains above. Redirects to the STREAMER'S OWN SUBDOMAIN
+ * (e.g. holden.liveth.net), not the bare apex domain — the Worker route is only
  * *.liveth.net/*, so the apex (no subdomain) isn't routed at all and would
  * 000/fail to connect. Runs on the existing wildcard, no new DNS record
  * needed. Plain even random pick, no time-of-day exclusion — that was only

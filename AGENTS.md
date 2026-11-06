@@ -9,7 +9,7 @@ analytics) — trust this file over that one.
 ## What this project is
 
 A Next.js landing page for a network of livestreamers. One codebase serves
-**15 streamers** (and growing) from one `data/streamers.ts` config — not
+**13 streamers** (and growing) from one `data/streamers.ts` config — not
 separate projects per streamer. Deployed to Cloudflare Workers via OpenNext,
 live at real custom domains (not just `workers.dev`):
 
@@ -127,19 +127,29 @@ toggle a class on `document.body` from a `useEffect` in `AppFrame.tsx` and
 target `body.your-class` in CSS — see `nexplay-halloween-bg` for a working
 example.
 
-## Seasonal theme (Halloween, as of this writing) — now on all 15 streamers
+## Seasonal theme (Halloween) — OFF as of 06/11/2026, flags kept for reuse
 
-What started as an Enjoy-only (`slug: "nexplay"`) reskin is now shared by
-**every streamer in the roster**, each fully reversible independently.
-Each streamer has its own gate constant in `data/streamers.ts`:
+What started as an Enjoy-only (`slug: "nexplay"`) reskin was shared by every
+streamer in the roster, each fully reversible independently. **All gate
+constants are currently `false`** — season ended, reverted back to each
+streamer's original look. Code for both looks is still intact (nothing
+deleted), so next Halloween just flip the constants back to `true` again,
+no re-entering art/copy.
 
 ```text
 NEXPLAY_HALLOWEEN_MODE, LHAM_HALLOWEEN_MODE, HOLDEN_HALLOWEEN_MODE,
-NUTT_HALLOWEEN_MODE, TOP_HALLOWEEN_MODE, KIM_HALLOWEEN_MODE,
+TOP_HALLOWEEN_MODE, KIM_HALLOWEEN_MODE,
 IVY_HALLOWEEN_MODE, WILLIAM_HALLOWEEN_MODE, ZEN_HALLOWEEN_MODE,
-LILY_HALLOWEEN_MODE, LILIN_HALLOWEEN_MODE, IRADA_HALLOWEEN_MODE,
+LILY_HALLOWEEN_MODE, LILIN_HALLOWEEN_MODE,
 MIGUEL_HALLOWEEN_MODE, AMMY_HALLOWEEN_MODE, GRACE_HALLOWEEN_MODE
 ```
+
+**Nutt and Irada were removed from the roster entirely on 06/11/2026**
+(both left) — not just reverted. Their `*_HALLOWEEN_MODE` constants,
+`*_STREAMER` configs, links, hero slides, routes, GA4 measurement ID
+entries, and ad-rotator subdomain entries are all gone, not merely
+disabled. If either name comes up in old context, they're no longer part
+of this codebase.
 
 Flipping any one of these to `false` and redeploying restores that
 streamer's original look exactly — images, copy, theme colors, header/nav
@@ -169,9 +179,11 @@ const xLook = X_HALLOWEEN_MODE ? X_HALLOWEEN_LOOK : X_DEFAULT_LOOK;
   (`public/streamers/<slug>/hero-halloween.webp`) and page-background
   image (`public/streamers/<slug>/halloween-bg.webp`) differ. Several
   streamers intentionally **reuse another streamer's background file**
-  (e.g. Zen reuses Nutt's, William reuses Top's, Ivy reuses Kim's, Irada/
-  Ammy reuse Nutt's, Miguel reuses Kim's) rather than getting a unique
-  scene — check `app/globals.css` for that streamer's
+  (e.g. William reuses Top's, Ivy and Miguel reuse Kim's, Lily and Lilin
+  share one scene between them; Zen and Ammy reuse Nutt's — that image
+  file is still on disk under `/streamers/nutt/` even though Nutt is no
+  longer in the roster) rather than getting a unique scene — check
+  `app/globals.css` for that streamer's
   `.app-shell[data-streamer="X"][data-seasonal="halloween"]` rule to see
   which image it actually points at before assuming it has its own.
 - **`scripts/sync-streamer-enjoy-ui.mjs`** (runs automatically via
@@ -286,7 +298,7 @@ confirm it looks identical to before.
   in-app WebView, because that WebView blocks `line://` scheme launches.
   Shown on every page via `app/layout.tsx`.
 - **Ad rotators** (`go.` / `friend.` subdomains in `middleware.ts`):
-  randomly fan out to one of the 15 streamer subdomains, used for Meta ad
+  randomly fan out to one of the 13 streamer subdomains, used for Meta ad
   campaigns. `friend.` exists specifically to separate Ads-driven LINE
   friend-adds from organic ones in LINE's own Friend-paths analytics.
 - **Bonus claim system** is currently **hidden from the UI** on every

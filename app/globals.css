@@ -9341,13 +9341,11 @@ body {
 .app-shell[data-streamer="william"],
 .app-shell[data-streamer="ammy"],
 .app-shell[data-streamer="zen"],
-.app-shell[data-streamer="nutt"],
 .app-shell[data-streamer="lham"],
 .app-shell[data-streamer="kim"],
 .app-shell[data-streamer="grace"],
 .app-shell[data-streamer="miguel"],
-.app-shell[data-streamer="top"],
-.app-shell[data-streamer="irada"] {
+.app-shell[data-streamer="top"] {
   background:
     radial-gradient(
       430px 260px at 4% 6%,
@@ -9402,20 +9400,6 @@ body {
 }
 
 /* Irada: white base with pink studio glow, matching the reference room. */
-.app-shell[data-streamer="irada"] {
-  background:
-    radial-gradient(
-      430px 260px at 4% 6%,
-      rgba(var(--theme-accent-rgb), 0.16),
-      transparent 68%
-    ),
-    radial-gradient(
-      390px 290px at 100% 34%,
-      rgba(var(--theme-secondary-rgb), 0.1),
-      transparent 70%
-    ),
-    linear-gradient(180deg, #ffffff 0%, #fff7fb 52%, #fdf2f8 100%);
-}
 
 .app-shell[data-streamer="ivy"] {
   background:
@@ -9509,108 +9493,6 @@ body {
 
 /* Nutt is a genuine dark-page theme (not the light-card pattern every other
    streamer uses) — page bg, header, bottom nav and nav pill all go dark here. */
-.app-shell[data-streamer="nutt"] {
-  --text: #f3ead9;
-  background:
-    radial-gradient(
-      430px 260px at 4% 6%,
-      rgba(var(--theme-accent-rgb), 0.16),
-      transparent 68%
-    ),
-    radial-gradient(
-      390px 290px at 100% 34%,
-      rgba(var(--theme-secondary-rgb), 0.12),
-      transparent 70%
-    ),
-    linear-gradient(180deg, #0b0906 0%, #100c07 52%, #14100a 100%);
-}
-
-.app-shell[data-streamer="nutt"] .site-header {
-  border-bottom-color: rgba(var(--theme-accent-rgb), 0.22);
-  background: linear-gradient(
-    180deg,
-    rgba(12, 10, 7, 0.97),
-    rgba(9, 7, 5, 0.92)
-  );
-  box-shadow:
-    0 1px 0 rgba(var(--theme-accent-rgb), 0.1),
-    0 10px 28px rgba(0, 0, 0, 0.4);
-}
-
-.app-shell[data-streamer="nutt"] .brand-text {
-  color: #f3ead9;
-  text-shadow: 0 1px 16px rgba(var(--theme-accent-rgb), 0.2);
-}
-
-.app-shell[data-streamer="nutt"] .section-heading h2 {
-  color: #f3ead9;
-  text-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-}
-
-.app-shell[data-streamer="nutt"] .icon-button,
-.app-shell[data-streamer="nutt"] .avatar-button {
-  border-color: rgba(var(--theme-accent-rgb), 0.3);
-  background: linear-gradient(145deg, #1c1610, #14100a);
-  color: var(--theme-accent-bright);
-  box-shadow:
-    inset 0 1px 0 rgba(var(--theme-accent-rgb), 0.14),
-    0 8px 20px rgba(0, 0, 0, 0.4);
-}
-
-.app-shell[data-streamer="nutt"] .section-link {
-  border-color: rgba(var(--theme-accent-rgb), 0.3);
-  color: var(--theme-accent-bright);
-  background: rgba(20, 16, 10, 0.6);
-  box-shadow:
-    inset 0 1px 0 rgba(var(--theme-accent-rgb), 0.12),
-    0 8px 18px rgba(0, 0, 0, 0.3);
-}
-
-.app-shell[data-streamer="nutt"] .bottom-nav {
-  background:
-    linear-gradient(
-        145deg,
-        rgba(14, 11, 7, 0.97),
-        rgba(10, 8, 5, 0.94)
-      )
-      padding-box,
-    linear-gradient(
-        116deg,
-        rgba(var(--theme-accent-rgb), 0.5),
-        rgba(var(--theme-accent-rgb), 0.42),
-        rgba(var(--theme-secondary-rgb), 0.24),
-        rgba(var(--theme-accent-rgb), 0.5)
-      )
-      border-box;
-  box-shadow:
-    inset 0 1px 0 rgba(var(--theme-accent-rgb), 0.14),
-    0 20px 46px rgba(0, 0, 0, 0.45),
-    0 0 30px rgba(var(--theme-accent-rgb), 0.14);
-}
-
-.app-shell[data-streamer="nutt"] .bottom-nav-item:hover,
-.app-shell[data-streamer="nutt"] .bottom-nav-item.is-active {
-  color: var(--theme-accent-bright);
-}
-
-.app-shell[data-streamer="nutt"] .bottom-nav-item.is-active .nav-icon-wrap {
-  color: var(--theme-accent-bright);
-}
-
-.app-shell[data-streamer="nutt"] .nav-active-island {
-  border-color: rgba(var(--theme-accent-rgb), 0.4);
-  background:
-    radial-gradient(
-      circle at 50% 112%,
-      rgba(var(--theme-accent-rgb), 0.3),
-      transparent 58%
-    ),
-    linear-gradient(180deg, rgba(24, 19, 12, 0.96), rgba(14, 11, 7, 0.96));
-  box-shadow:
-    inset 0 1px 0 rgba(var(--theme-accent-rgb), 0.18),
-    0 0 27px rgba(var(--theme-accent-rgb), 0.3),
-    0 8px 19px rgba(0, 0, 0, 0.3);
-}
 
 /* Lham is a genuine dark-page theme, following the same pattern as Nutt —
    page bg, header, bottom nav and nav pill all go dark here. */
@@ -10040,7 +9922,6 @@ body {
 .app-shell[data-streamer="william"] .ambient-layer::before,
 .app-shell[data-streamer="ammy"] .ambient-layer::before,
 .app-shell[data-streamer="zen"] .ambient-layer::before,
-.app-shell[data-streamer="nutt"] .ambient-layer::before,
 .app-shell[data-streamer="lham"] .ambient-layer::before,
 .app-shell[data-streamer="kim"] .ambient-layer::before,
 .app-shell[data-streamer="grace"] .ambient-layer::before,
@@ -10057,7 +9938,6 @@ body {
 .app-shell[data-streamer="william"] .ambient-layer::after,
 .app-shell[data-streamer="ammy"] .ambient-layer::after,
 .app-shell[data-streamer="zen"] .ambient-layer::after,
-.app-shell[data-streamer="nutt"] .ambient-layer::after,
 .app-shell[data-streamer="lham"] .ambient-layer::after,
 .app-shell[data-streamer="kim"] .ambient-layer::after,
 .app-shell[data-streamer="grace"] .ambient-layer::after,
@@ -10074,7 +9954,6 @@ body {
 .app-shell[data-streamer="william"] .ambient-mesh,
 .app-shell[data-streamer="ammy"] .ambient-mesh,
 .app-shell[data-streamer="zen"] .ambient-mesh,
-.app-shell[data-streamer="nutt"] .ambient-mesh,
 .app-shell[data-streamer="lham"] .ambient-mesh,
 .app-shell[data-streamer="kim"] .ambient-mesh,
 .app-shell[data-streamer="grace"] .ambient-mesh,
@@ -10134,7 +10013,6 @@ body {
 .app-shell[data-streamer="william"] .brand-mark,
 .app-shell[data-streamer="ammy"] .brand-mark,
 .app-shell[data-streamer="zen"] .brand-mark,
-.app-shell[data-streamer="nutt"] .brand-mark,
 .app-shell[data-streamer="lham"] .brand-mark,
 .app-shell[data-streamer="kim"] .brand-mark,
 .app-shell[data-streamer="grace"] .brand-mark,
@@ -10154,7 +10032,6 @@ body {
 .app-shell[data-streamer="william"] .brand-live,
 .app-shell[data-streamer="ammy"] .brand-live,
 .app-shell[data-streamer="zen"] .brand-live,
-.app-shell[data-streamer="nutt"] .brand-live,
 .app-shell[data-streamer="lham"] .brand-live,
 .app-shell[data-streamer="kim"] .brand-live,
 .app-shell[data-streamer="grace"] .brand-live,
@@ -10180,7 +10057,6 @@ body {
 .app-shell[data-streamer="william"] .hero-stage,
 .app-shell[data-streamer="ammy"] .hero-stage,
 .app-shell[data-streamer="zen"] .hero-stage,
-.app-shell[data-streamer="nutt"] .hero-stage,
 .app-shell[data-streamer="lham"] .hero-stage,
 .app-shell[data-streamer="kim"] .hero-stage,
 .app-shell[data-streamer="grace"] .hero-stage,
@@ -10222,10 +10098,6 @@ body {
   background: #05100f;
 }
 
-.app-shell[data-streamer="nutt"] .hero-stage {
-  background: #0a0704;
-}
-
 .app-shell[data-streamer="lham"] .hero-stage {
   background: #120a26;
 }
@@ -10254,7 +10126,6 @@ body {
 .app-shell[data-streamer="william"] .hero-stage::before,
 .app-shell[data-streamer="ammy"] .hero-stage::before,
 .app-shell[data-streamer="zen"] .hero-stage::before,
-.app-shell[data-streamer="nutt"] .hero-stage::before,
 .app-shell[data-streamer="lham"] .hero-stage::before,
 .app-shell[data-streamer="kim"] .hero-stage::before,
 .app-shell[data-streamer="grace"] .hero-stage::before,
@@ -10277,7 +10148,6 @@ body {
 .app-shell[data-streamer="william"] .hero-stage::after,
 .app-shell[data-streamer="ammy"] .hero-stage::after,
 .app-shell[data-streamer="zen"] .hero-stage::after,
-.app-shell[data-streamer="nutt"] .hero-stage::after,
 .app-shell[data-streamer="lham"] .hero-stage::after,
 .app-shell[data-streamer="kim"] .hero-stage::after,
 .app-shell[data-streamer="grace"] .hero-stage::after,
@@ -10297,7 +10167,6 @@ body {
 .app-shell[data-streamer="william"] .hero-art,
 .app-shell[data-streamer="ammy"] .hero-art,
 .app-shell[data-streamer="zen"] .hero-art,
-.app-shell[data-streamer="nutt"] .hero-art,
 .app-shell[data-streamer="lham"] .hero-art,
 .app-shell[data-streamer="kim"] .hero-art,
 .app-shell[data-streamer="grace"] .hero-art,
@@ -10315,7 +10184,6 @@ body {
 .app-shell[data-streamer="william"] .hero-vignette,
 .app-shell[data-streamer="ammy"] .hero-vignette,
 .app-shell[data-streamer="zen"] .hero-vignette,
-.app-shell[data-streamer="nutt"] .hero-vignette,
 .app-shell[data-streamer="lham"] .hero-vignette,
 .app-shell[data-streamer="kim"] .hero-vignette,
 .app-shell[data-streamer="grace"] .hero-vignette,
@@ -10448,22 +10316,6 @@ body {
     );
 }
 
-.app-shell[data-streamer="nutt"] .hero-vignette {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(10, 7, 4, 0.9) 0%,
-      rgba(50, 36, 12, 0.72) 35%,
-      rgba(16, 11, 6, 0.12) 67%,
-      transparent 100%
-    ),
-    linear-gradient(
-      180deg,
-      transparent 48%,
-      rgba(6, 4, 2, 0.42) 100%
-    );
-}
-
 .app-shell[data-streamer="lham"] .hero-vignette {
   background:
     linear-gradient(
@@ -10552,7 +10404,6 @@ body {
 .app-shell[data-streamer="william"] .hero-particle,
 .app-shell[data-streamer="ammy"] .hero-particle,
 .app-shell[data-streamer="zen"] .hero-particle,
-.app-shell[data-streamer="nutt"] .hero-particle,
 .app-shell[data-streamer="lham"] .hero-particle,
 .app-shell[data-streamer="kim"] .hero-particle,
 .app-shell[data-streamer="grace"] .hero-particle,
@@ -10572,7 +10423,6 @@ body {
 .app-shell[data-streamer="william"] .float-orb,
 .app-shell[data-streamer="ammy"] .float-orb,
 .app-shell[data-streamer="zen"] .float-orb,
-.app-shell[data-streamer="nutt"] .float-orb,
 .app-shell[data-streamer="lham"] .float-orb,
 .app-shell[data-streamer="kim"] .float-orb,
 .app-shell[data-streamer="grace"] .float-orb,
@@ -10596,7 +10446,6 @@ body {
 .app-shell[data-streamer="william"] .hero-content h1 > span,
 .app-shell[data-streamer="ammy"] .hero-content h1 > span,
 .app-shell[data-streamer="zen"] .hero-content h1 > span,
-.app-shell[data-streamer="nutt"] .hero-content h1 > span,
 .app-shell[data-streamer="lham"] .hero-content h1 > span,
 .app-shell[data-streamer="kim"] .hero-content h1 > span,
 .app-shell[data-streamer="grace"] .hero-content h1 > span,
@@ -10621,7 +10470,6 @@ body {
 .app-shell[data-streamer="william"] .viewer-row strong,
 .app-shell[data-streamer="ammy"] .viewer-row strong,
 .app-shell[data-streamer="zen"] .viewer-row strong,
-.app-shell[data-streamer="nutt"] .viewer-row strong,
 .app-shell[data-streamer="lham"] .viewer-row strong,
 .app-shell[data-streamer="kim"] .viewer-row strong,
 .app-shell[data-streamer="grace"] .viewer-row strong,
@@ -10638,7 +10486,6 @@ body {
 .app-shell[data-streamer="william"] .hero-cta,
 .app-shell[data-streamer="ammy"] .hero-cta,
 .app-shell[data-streamer="zen"] .hero-cta,
-.app-shell[data-streamer="nutt"] .hero-cta,
 .app-shell[data-streamer="lham"] .hero-cta,
 .app-shell[data-streamer="kim"] .hero-cta,
 .app-shell[data-streamer="grace"] .hero-cta,
@@ -10665,7 +10512,6 @@ body {
 .app-shell[data-streamer="william"] .action-purple,
 .app-shell[data-streamer="ammy"] .action-purple,
 .app-shell[data-streamer="zen"] .action-purple,
-.app-shell[data-streamer="nutt"] .action-purple,
 .app-shell[data-streamer="lham"] .action-purple,
 .app-shell[data-streamer="kim"] .action-purple,
 .app-shell[data-streamer="grace"] .action-purple,
@@ -10822,7 +10668,6 @@ body {
 .app-shell[data-streamer="william"] .promo-pagination .is-active,
 .app-shell[data-streamer="ammy"] .promo-pagination .is-active,
 .app-shell[data-streamer="zen"] .promo-pagination .is-active,
-.app-shell[data-streamer="nutt"] .promo-pagination .is-active,
 .app-shell[data-streamer="lham"] .promo-pagination .is-active,
 .app-shell[data-streamer="kim"] .promo-pagination .is-active,
 .app-shell[data-streamer="grace"] .promo-pagination .is-active,
@@ -10972,7 +10817,6 @@ body {
 .app-shell[data-streamer="william"] .nav-active-island::after,
 .app-shell[data-streamer="ammy"] .nav-active-island::after,
 .app-shell[data-streamer="zen"] .nav-active-island::after,
-.app-shell[data-streamer="nutt"] .nav-active-island::after,
 .app-shell[data-streamer="lham"] .nav-active-island::after,
 .app-shell[data-streamer="kim"] .nav-active-island::after,
 .app-shell[data-streamer="grace"] .nav-active-island::after,
@@ -11027,9 +10871,6 @@ body {
 .app-shell[data-streamer="zen"]
   .bottom-nav-item.is-center
   .nav-icon-wrap,
-.app-shell[data-streamer="nutt"]
-  .bottom-nav-item.is-center
-  .nav-icon-wrap,
 .app-shell[data-streamer="lham"]
   .bottom-nav-item.is-center
   .nav-icon-wrap,
@@ -11072,7 +10913,6 @@ body {
 .app-shell[data-streamer="lilin"] .page-heading-glow,
 .app-shell[data-streamer="william"] .page-heading-glow,
 .app-shell[data-streamer="ammy"] .page-heading-glow,
-.app-shell[data-streamer="nutt"] .page-heading-glow,
 .app-shell[data-streamer="lham"] .page-heading-glow,
 .app-shell[data-streamer="kim"] .page-heading-glow,
 .app-shell[data-streamer="grace"] .page-heading-glow,
@@ -12894,3 +12734,4 @@ body.nexplay-halloween-bg {
 .app-shell[data-streamer="nexplay"][data-enjoy-cards="pink"] .promo-new-member .promo-cta {
   opacity: 0;
 }
+

@@ -59,13 +59,11 @@ const GA4_MEASUREMENT_IDS: Record<StreamerSlug, string> = {
   william: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_WILLIAM?.trim() ?? "",
   ammy: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_AMMY?.trim() ?? "",
   zen: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_ZEN?.trim() ?? "",
-  nutt: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_NUTT?.trim() ?? "",
   lham: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_LHAM?.trim() ?? "",
   kim: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_KIM?.trim() ?? "",
   grace: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_GRACE?.trim() ?? "",
   miguel: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_MIGUEL?.trim() ?? "",
   top: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_TOP?.trim() ?? "",
-  irada: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_IRADA?.trim() ?? "",
 };
 
 export function getMeasurementId(slug: StreamerSlug): string {

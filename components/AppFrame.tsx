@@ -33,7 +33,6 @@ import {
   AMMY_HALLOWEEN_MODE,
   GRACE_HALLOWEEN_MODE,
   HOLDEN_HALLOWEEN_MODE,
-  IRADA_HALLOWEEN_MODE,
   IVY_HALLOWEEN_MODE,
   KIM_HALLOWEEN_MODE,
   LHAM_HALLOWEEN_MODE,
@@ -42,7 +41,6 @@ import {
   MIGUEL_HALLOWEEN_MODE,
   NEXPLAY_HALLOWEEN_MODE,
   NEXPLAY_PINK_CARDS_MODE,
-  NUTT_HALLOWEEN_MODE,
   TOP_HALLOWEEN_MODE,
   WILLIAM_HALLOWEEN_MODE,
   ZEN_HALLOWEEN_MODE,
@@ -320,7 +318,6 @@ export default function AppFrame({
     streamer.slug === "lham" && LHAM_HALLOWEEN_MODE;
   const isHoldenHalloween =
     streamer.slug === "holden" && HOLDEN_HALLOWEEN_MODE;
-  const isNuttHalloween = streamer.slug === "nutt" && NUTT_HALLOWEEN_MODE;
   const isTopHalloween = streamer.slug === "top" && TOP_HALLOWEEN_MODE;
   const isKimHalloween = streamer.slug === "kim" && KIM_HALLOWEEN_MODE;
   const isIvyHalloween = streamer.slug === "ivy" && IVY_HALLOWEEN_MODE;
@@ -329,7 +326,6 @@ export default function AppFrame({
   const isZenHalloween = streamer.slug === "zen" && ZEN_HALLOWEEN_MODE;
   const isLilyHalloween = streamer.slug === "lily" && LILY_HALLOWEEN_MODE;
   const isLilinHalloween = streamer.slug === "lilin" && LILIN_HALLOWEEN_MODE;
-  const isIradaHalloween = streamer.slug === "irada" && IRADA_HALLOWEEN_MODE;
   const isMiguelHalloween =
     streamer.slug === "miguel" && MIGUEL_HALLOWEEN_MODE;
   const isAmmyHalloween = streamer.slug === "ammy" && AMMY_HALLOWEEN_MODE;
@@ -345,7 +341,6 @@ export default function AppFrame({
     document.body.classList.toggle("nexplay-halloween-bg", isNexplayHalloween);
     document.body.classList.toggle("lham-halloween-bg", isLhamHalloween);
     document.body.classList.toggle("holden-halloween-bg", isHoldenHalloween);
-    document.body.classList.toggle("nutt-halloween-bg", isNuttHalloween);
     document.body.classList.toggle("top-halloween-bg", isTopHalloween);
     document.body.classList.toggle("kim-halloween-bg", isKimHalloween);
     document.body.classList.toggle("ivy-halloween-bg", isIvyHalloween);
@@ -356,7 +351,6 @@ export default function AppFrame({
     document.body.classList.toggle("zen-halloween-bg", isZenHalloween);
     document.body.classList.toggle("lily-halloween-bg", isLilyHalloween);
     document.body.classList.toggle("lilin-halloween-bg", isLilinHalloween);
-    document.body.classList.toggle("irada-halloween-bg", isIradaHalloween);
     document.body.classList.toggle("miguel-halloween-bg", isMiguelHalloween);
     document.body.classList.toggle("ammy-halloween-bg", isAmmyHalloween);
     document.body.classList.toggle("grace-halloween-bg", isGraceHalloween);
@@ -364,7 +358,6 @@ export default function AppFrame({
       document.body.classList.remove("nexplay-halloween-bg");
       document.body.classList.remove("lham-halloween-bg");
       document.body.classList.remove("holden-halloween-bg");
-      document.body.classList.remove("nutt-halloween-bg");
       document.body.classList.remove("top-halloween-bg");
       document.body.classList.remove("kim-halloween-bg");
       document.body.classList.remove("ivy-halloween-bg");
@@ -372,7 +365,6 @@ export default function AppFrame({
       document.body.classList.remove("zen-halloween-bg");
       document.body.classList.remove("lily-halloween-bg");
       document.body.classList.remove("lilin-halloween-bg");
-      document.body.classList.remove("irada-halloween-bg");
       document.body.classList.remove("miguel-halloween-bg");
       document.body.classList.remove("ammy-halloween-bg");
       document.body.classList.remove("grace-halloween-bg");
@@ -381,7 +373,6 @@ export default function AppFrame({
     isNexplayHalloween,
     isLhamHalloween,
     isHoldenHalloween,
-    isNuttHalloween,
     isTopHalloween,
     isKimHalloween,
     isIvyHalloween,
@@ -389,7 +380,6 @@ export default function AppFrame({
     isZenHalloween,
     isLilyHalloween,
     isLilinHalloween,
-    isIradaHalloween,
     isMiguelHalloween,
     isAmmyHalloween,
     isGraceHalloween,

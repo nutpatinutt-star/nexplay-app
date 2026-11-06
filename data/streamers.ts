@@ -22,13 +22,11 @@ export type StreamerConfig = {
     | "william"
     | "ammy"
     | "zen"
-    | "nutt"
     | "lham"
     | "kim"
     | "grace"
     | "miguel"
-    | "top"
-    | "irada";
+    | "top";
   name: string;
   displayName: string;
   basePath:
@@ -40,13 +38,11 @@ export type StreamerConfig = {
     | "/william"
     | "/ammy"
     | "/zen"
-    | "/nutt"
     | "/lham"
     | "/kim"
     | "/grace"
     | "/miguel"
-    | "/top"
-    | "/irada";
+    | "/top";
   heroImage: string;
   avatarImage: string;
   heroAlt: string;
@@ -245,31 +241,6 @@ const zenLinks: ExternalLinks = {
   profile: "",
 };
 
-const nuttLinks: ExternalLinks = {
-  register: process.env.NEXT_PUBLIC_NUTT_REGISTER_URL?.trim() ?? "",
-  line: process.env.NEXT_PUBLIC_NUTT_LINE_OA_URL?.trim() ?? "",
-  lineAds:
-    process.env.NEXT_PUBLIC_NUTT_LINE_OA_ADS_URL?.trim() ??
-    process.env.NEXT_PUBLIC_NUTT_LINE_OA_URL?.trim() ??
-    "",
-  claimPromo:
-    process.env.NEXT_PUBLIC_NUTT_CLAIM_PROMO_URL?.trim() ??
-    process.env.NEXT_PUBLIC_NUTT_REGISTER_URL?.trim() ??
-    "",
-  support:
-    process.env.NEXT_PUBLIC_NUTT_SUPPORT_URL?.trim() ??
-    process.env.NEXT_PUBLIC_NUTT_LINE_OA_URL?.trim() ??
-    "",
-  facebook: process.env.NEXT_PUBLIC_NUTT_FACEBOOK_URL?.trim() ?? "",
-  instagram: process.env.NEXT_PUBLIC_NUTT_INSTAGRAM_URL?.trim() ?? "",
-  tiktok: process.env.NEXT_PUBLIC_NUTT_TIKTOK_URL?.trim() ?? "",
-  youtube: "",
-  discord: "",
-  vip: "",
-  wallet: "",
-  profile: "",
-};
-
 const lhamLinks: ExternalLinks = {
   register: process.env.NEXT_PUBLIC_LHAM_REGISTER_URL?.trim() ?? "",
   line: process.env.NEXT_PUBLIC_LHAM_LINE_OA_URL?.trim() ?? "",
@@ -395,31 +366,6 @@ const topLinks: ExternalLinks = {
   profile: "",
 };
 
-const iradaLinks: ExternalLinks = {
-  register: process.env.NEXT_PUBLIC_IRADA_REGISTER_URL?.trim() ?? "",
-  line: process.env.NEXT_PUBLIC_IRADA_LINE_OA_URL?.trim() ?? "",
-  lineAds:
-    process.env.NEXT_PUBLIC_IRADA_LINE_OA_ADS_URL?.trim() ??
-    process.env.NEXT_PUBLIC_IRADA_LINE_OA_URL?.trim() ??
-    "",
-  claimPromo:
-    process.env.NEXT_PUBLIC_IRADA_CLAIM_PROMO_URL?.trim() ??
-    process.env.NEXT_PUBLIC_IRADA_REGISTER_URL?.trim() ??
-    "",
-  support:
-    process.env.NEXT_PUBLIC_IRADA_SUPPORT_URL?.trim() ??
-    process.env.NEXT_PUBLIC_IRADA_LINE_OA_URL?.trim() ??
-    "",
-  facebook: process.env.NEXT_PUBLIC_IRADA_FACEBOOK_URL?.trim() ?? "",
-  instagram: process.env.NEXT_PUBLIC_IRADA_INSTAGRAM_URL?.trim() ?? "",
-  tiktok: process.env.NEXT_PUBLIC_IRADA_TIKTOK_URL?.trim() ?? "",
-  youtube: "",
-  discord: "",
-  vip: "",
-  wallet: "",
-  profile: "",
-};
-
 const sharedSlides = {
   member: {
     eyebrow: "สมาชิกใหม่",
@@ -448,7 +394,7 @@ const sharedSlides = {
  * (ghost icon, "สมัครเลย" label) and by the `[data-seasonal="halloween"]`
  * CSS in app/globals.css (dark page/header/nav/social-card overrides) —
  * flipping this one constant reverts all of those together. */
-export const NEXPLAY_HALLOWEEN_MODE = true;
+export const NEXPLAY_HALLOWEEN_MODE = false;
 
 /* Enjoy-exclusive new card/button art (pink neon register/LINE buttons,
  * social cards, bottom nav, VIP/deposit promo art) requested directly —
@@ -541,7 +487,7 @@ export const DEFAULT_STREAMER: StreamerConfig = {
 };
 
 /** Keep Holden's original blue look available for a one-flag revert. */
-export const HOLDEN_HALLOWEEN_MODE = true;
+export const HOLDEN_HALLOWEEN_MODE = false;
 
 const HOLDEN_DEFAULT_LOOK = {
   heroImage: "/streamers/holden/hero.webp",
@@ -613,7 +559,7 @@ export const HOLDEN_STREAMER: StreamerConfig = {
  * photo and the page-background image are Lily's own — her background is
  * shared with Lilin's (same new scene, per request). Flip
  * LILY_HALLOWEEN_MODE to false to revert to the original cyber-bunny look. */
-export const LILY_HALLOWEEN_MODE = true;
+export const LILY_HALLOWEEN_MODE = false;
 
 const LILY_DEFAULT_LOOK = {
   heroImage: "/streamers/lilly/hero.png",
@@ -685,7 +631,7 @@ export const LILY_STREAMER: StreamerConfig = {
  * photo and the page-background image are Ivy's own — her background is
  * reused from Kim's scene per request. Flip IVY_HALLOWEEN_MODE to false to
  * revert to the original moss-amber look. */
-export const IVY_HALLOWEEN_MODE = true;
+export const IVY_HALLOWEEN_MODE = false;
 
 const IVY_DEFAULT_LOOK = {
   heroImage: "/streamers/ivy/hero.png",
@@ -758,7 +704,7 @@ export const IVY_STREAMER: StreamerConfig = {
  * background is shared with Lily's (same new scene, per request). Flip
  * LILIN_HALLOWEEN_MODE to false to revert to the original pastel-purple
  * look. */
-export const LILIN_HALLOWEEN_MODE = true;
+export const LILIN_HALLOWEEN_MODE = false;
 
 const LILIN_DEFAULT_LOOK = {
   heroImage: "/streamers/lilin/hero.png",
@@ -831,7 +777,7 @@ export const LILIN_STREAMER: StreamerConfig = {
  * background is reused from Top's scene per request. Flip
  * WILLIAM_HALLOWEEN_MODE to false to revert to the original copper-fire
  * look. */
-export const WILLIAM_HALLOWEEN_MODE = true;
+export const WILLIAM_HALLOWEEN_MODE = false;
 
 const WILLIAM_DEFAULT_LOOK = {
   heroImage: "/streamers/william/hero.png",
@@ -904,7 +850,7 @@ export const WILLIAM_STREAMER: StreamerConfig = {
  * scene per request (no new background image was supplied). Flip
  * AMMY_HALLOWEEN_MODE to false to revert to the original turquoise-lavender
  * aurora look. */
-export const AMMY_HALLOWEEN_MODE = true;
+export const AMMY_HALLOWEEN_MODE = false;
 
 const AMMY_DEFAULT_LOOK = {
   heroImage: "/streamers/ammy/hero.png",
@@ -976,7 +922,7 @@ export const AMMY_STREAMER: StreamerConfig = {
  * photo and the page-background image are Zen's own — Zen's background is
  * reused from Nutt's scene per request. Flip ZEN_HALLOWEEN_MODE to false
  * to revert to the original teal-amber rainy-night look. */
-export const ZEN_HALLOWEEN_MODE = true;
+export const ZEN_HALLOWEEN_MODE = false;
 
 const ZEN_DEFAULT_LOOK = {
   heroImage: "/streamers/zen/hero.png",
@@ -1042,82 +988,8 @@ export const ZEN_STREAMER: StreamerConfig = {
   ],
 };
 
-/** Keep Nutt's black-gold studio look intact so the Halloween artwork can be
- * reverted in one flag. Unlike Holden/Lham (background + avatar crop only),
- * Nutt gets the FULL Enjoy treatment (dark header/nav/cards/buttons) on
- * request — see the `nutt` entries appended alongside `nexplay` throughout
- * the `[data-seasonal="halloween"]` CSS in app/globals.css. Per the brief
- * ("แตกต่างที่รูปสตรีมเมอร์และพื้นหลังเท่านั้น"), those shared rules
- * intentionally keep pointing at Enjoy's own button/nav/social-card art —
- * only the hero photo and the page-background image are Nutt's own. */
-export const NUTT_HALLOWEEN_MODE = true;
-
-const NUTT_DEFAULT_LOOK = {
-  heroImage: "/streamers/nutt/hero.png",
-  avatarImage: "/streamers/nutt/avatar.png",
-  heroAlt: "Nutt ในธีมดำ-ทอง เส้นแสงทองเรขาคณิตพื้นหลังดำ",
-  heroTitle: "ไลฟ์สดกับ Nutt",
-  heroHighlight: "เข้มขรึมทุกวัน",
-  theme: {
-    accent: "#E3A93B",
-    accentDeep: "#8C5F1B",
-    accentBright: "#F7C866",
-    accentSoft: "#FCEBC9",
-    accentRgb: "227, 169, 59",
-    secondaryRgb: "201, 122, 31",
-  },
-} as const;
-
-const NUTT_HALLOWEEN_LOOK = {
-  heroImage: "/streamers/nutt/hero-halloween.webp",
-  avatarImage: "/streamers/nutt/hero-halloween.webp",
-  heroAlt: "Nutt ในชุดเคานต์แวมไพร์ขาว-ดำ นั่งบัลลังก์หน้าปราสาทฮาโลวีน แสงจันทร์และฟักทองเรืองแสง",
-  heroTitle: NEXPLAY_HALLOWEEN_LOOK.heroSlide.title,
-  heroHighlight: NEXPLAY_HALLOWEEN_LOOK.heroSlide.highlight,
-  theme: NEXPLAY_HALLOWEEN_LOOK.theme,
-} as const;
-
-/* Post-Halloween: back to Nutt's own hero photo/background; shared
- * card/button/nav/social styling stays (see nexplayLook above). */
-const nuttLook = NUTT_DEFAULT_LOOK;
-
-export const NUTT_STREAMER: StreamerConfig = {
-  slug: "nutt",
-  name: "NUTT",
-  displayName: "NUTT LIVE",
-  basePath: "/nutt",
-  heroImage: nuttLook.heroImage,
-  avatarImage: nuttLook.avatarImage,
-  heroAlt: nuttLook.heroAlt,
-  followers: "ติดตาม Nutt",
-  socialTitle: "ติดตาม Nutt",
-  theme: nuttLook.theme,
-  socialFollowers: {
-    facebook: "ติดตาม Nutt",
-    instagram: "ติดตาม Nutt",
-    tiktok: "ติดตาม Nutt",
-    line: "เพิ่มเพื่อน",
-  },
-  links: nuttLinks,
-  heroSlides: [
-    {
-      eyebrow: "NUTT LIVE",
-      title: nuttLook.heroTitle,
-      highlight: nuttLook.heroHighlight,
-      description: "พูดคุยสด พร้อมกิจกรรมพิเศษ\n1–3 PM · 7–9 PM",
-      cta: "เข้าไลฟ์ตอนนี้",
-      action: "line",
-    },
-    {
-      ...sharedSlides.member,
-      highlight: "รับโบนัสสูงสุด 2,000",
-    },
-    sharedSlides.rewards,
-  ],
-};
-
 /** Keep Lham's studio look intact so the Halloween artwork can be reverted. */
-export const LHAM_HALLOWEEN_MODE = true;
+export const LHAM_HALLOWEEN_MODE = false;
 
 const LHAM_DEFAULT_LOOK = {
   heroImage: "/streamers/lham/hero.png",
@@ -1148,15 +1020,16 @@ const LHAM_HALLOWEEN_LOOK = {
  * card/button/nav/social styling stays (see nexplayLook above). */
 const lhamLook = LHAM_DEFAULT_LOOK;
 
-/** Every streamer — Enjoy, Lham, Holden, Nutt, Top, Kim, Ivy, William, Zen,
- * Lily, Lilin, Irada, Miguel, Ammy and Grace — shares one Halloween UI
- * while retaining their own data. */
+/** Every streamer — Enjoy, Lham, Holden, Top, Kim, Ivy, William, Zen,
+ * Lily, Lilin, Miguel, Ammy and Grace — shares one Halloween UI
+ * while retaining their own data. All flags are currently `false`
+ * (Halloween season over, 06/11/2026) — flip the relevant one back to
+ * `true` to reuse it next year; nothing else needs re-entering. */
 export function usesEnjoyHalloweenUi(streamerSlug: string): boolean {
   return (
     (streamerSlug === "nexplay" && NEXPLAY_HALLOWEEN_MODE) ||
     (streamerSlug === "lham" && LHAM_HALLOWEEN_MODE) ||
     (streamerSlug === "holden" && HOLDEN_HALLOWEEN_MODE) ||
-    (streamerSlug === "nutt" && NUTT_HALLOWEEN_MODE) ||
     (streamerSlug === "top" && TOP_HALLOWEEN_MODE) ||
     (streamerSlug === "kim" && KIM_HALLOWEEN_MODE) ||
     (streamerSlug === "ivy" && IVY_HALLOWEEN_MODE) ||
@@ -1164,7 +1037,6 @@ export function usesEnjoyHalloweenUi(streamerSlug: string): boolean {
     (streamerSlug === "zen" && ZEN_HALLOWEEN_MODE) ||
     (streamerSlug === "lily" && LILY_HALLOWEEN_MODE) ||
     (streamerSlug === "lilin" && LILIN_HALLOWEEN_MODE) ||
-    (streamerSlug === "irada" && IRADA_HALLOWEEN_MODE) ||
     (streamerSlug === "miguel" && MIGUEL_HALLOWEEN_MODE) ||
     (streamerSlug === "ammy" && AMMY_HALLOWEEN_MODE) ||
     (streamerSlug === "grace" && GRACE_HALLOWEEN_MODE)
@@ -1211,7 +1083,7 @@ export const LHAM_STREAMER: StreamerConfig = {
  * scripts/sync-streamer-enjoy-ui.mjs). Only the hero photo and the
  * page-background image are Kim's own. Flip KIM_HALLOWEEN_MODE to false
  * to revert to the original purple-neon-studio look. */
-export const KIM_HALLOWEEN_MODE = true;
+export const KIM_HALLOWEEN_MODE = false;
 
 const KIM_DEFAULT_LOOK = {
   heroImage: "/streamers/kim/hero.png",
@@ -1283,7 +1155,7 @@ export const KIM_STREAMER: StreamerConfig = {
  * hero photo and the page-background image are Grace's own — a new green
  * witch-castle scene. Flip GRACE_HALLOWEEN_MODE to false to revert to the
  * original magenta-purple studio look. */
-export const GRACE_HALLOWEEN_MODE = true;
+export const GRACE_HALLOWEEN_MODE = false;
 
 const GRACE_DEFAULT_LOOK = {
   heroImage: "/streamers/grace/hero.png",
@@ -1356,7 +1228,7 @@ export const GRACE_STREAMER: StreamerConfig = {
  * scene per request (no new background image was supplied). Flip
  * MIGUEL_HALLOWEEN_MODE to false to revert to the original cream-sand
  * minimal-studio look. */
-export const MIGUEL_HALLOWEEN_MODE = true;
+export const MIGUEL_HALLOWEEN_MODE = false;
 
 const MIGUEL_DEFAULT_LOOK = {
   heroImage: "/streamers/miguel/hero.png",
@@ -1427,7 +1299,7 @@ export const MIGUEL_STREAMER: StreamerConfig = {
  * scripts/sync-streamer-enjoy-ui.mjs). Only the hero photo and the
  * page-background image are Top's own. Flip TOP_HALLOWEEN_MODE to false
  * to revert to the original cyberpunk-studio look. */
-export const TOP_HALLOWEEN_MODE = true;
+export const TOP_HALLOWEEN_MODE = false;
 
 const TOP_DEFAULT_LOOK = {
   heroImage: "/streamers/top/hero.png",
@@ -1493,79 +1365,6 @@ export const TOP_STREAMER: StreamerConfig = {
   ],
 };
 
-/* Irada — reversible Halloween mode, same shared Enjoy-tier UI as the
- * other Halloween streamers (cards, buttons, nav, social-card art are
- * Enjoy's assets, synced via scripts/sync-streamer-enjoy-ui.mjs). Only the
- * hero photo is Irada's own — her page-background is reused from Nutt's
- * scene per request (no new background image was supplied). Flip
- * IRADA_HALLOWEEN_MODE to false to revert to the original pink-studio
- * look. */
-export const IRADA_HALLOWEEN_MODE = true;
-
-const IRADA_DEFAULT_LOOK = {
-  heroImage: "/streamers/irada/hero.png",
-  avatarImage: "/streamers/irada/avatar.png",
-  heroAlt: "Irada ในห้องสตรีมมิ่งสีชมพู ป้าย LIVE นีออน และเก้าอี้เกมมิ่งสีชมพู",
-  heroTitle: "ไลฟ์สดกับ Irada",
-  heroHighlight: "น่ารักทุกวัน",
-  theme: {
-    accent: "#EC4899",
-    accentDeep: "#BE185D",
-    accentBright: "#F472B6",
-    accentSoft: "#FCE7F3",
-    accentRgb: "236, 72, 153",
-    secondaryRgb: "168, 85, 247",
-  },
-} as const;
-
-const IRADA_HALLOWEEN_LOOK = {
-  heroImage: "/streamers/irada/hero-halloween.webp",
-  avatarImage: "/streamers/irada/hero-halloween.webp",
-  heroAlt: "Irada ในชุดแม่มดฮาโลวีนหมวกปีกกว้างส้ม-ดำ นั่งหน้าปราสาทใต้แสงจันทร์เต็มดวง",
-  heroTitle: NEXPLAY_HALLOWEEN_LOOK.heroSlide.title,
-  heroHighlight: NEXPLAY_HALLOWEEN_LOOK.heroSlide.highlight,
-  theme: NEXPLAY_HALLOWEEN_LOOK.theme,
-} as const;
-
-/* Post-Halloween: back to Irada's own hero photo/background; shared
- * card/button/nav/social styling stays (see nexplayLook above). */
-const iradaLook = IRADA_DEFAULT_LOOK;
-
-export const IRADA_STREAMER: StreamerConfig = {
-  slug: "irada",
-  name: "IRADA",
-  displayName: "IRADA LIVE",
-  basePath: "/irada",
-  heroImage: iradaLook.heroImage,
-  avatarImage: iradaLook.avatarImage,
-  heroAlt: iradaLook.heroAlt,
-  followers: "ติดตาม Irada",
-  socialTitle: "ติดตาม Irada",
-  theme: iradaLook.theme,
-  socialFollowers: {
-    facebook: "ติดตาม Irada",
-    instagram: "ติดตาม Irada",
-    tiktok: "ติดตาม Irada",
-    line: "เพิ่มเพื่อน",
-  },
-  links: iradaLinks,
-  heroSlides: [
-    {
-      eyebrow: "IRADA LIVE",
-      title: iradaLook.heroTitle,
-      highlight: iradaLook.heroHighlight,
-      description: "พูดคุยสด พร้อมกิจกรรมพิเศษ\n1–3 PM · 7–9 PM",
-      cta: "เข้าไลฟ์ตอนนี้",
-      action: "line",
-    },
-    {
-      ...sharedSlides.member,
-      highlight: "รับโบนัสสูงสุด 2,000",
-    },
-    sharedSlides.rewards,
-  ],
-};
-
 export const STREAMERS = [
   DEFAULT_STREAMER,
   HOLDEN_STREAMER,
@@ -1575,13 +1374,11 @@ export const STREAMERS = [
   WILLIAM_STREAMER,
   AMMY_STREAMER,
   ZEN_STREAMER,
-  NUTT_STREAMER,
   LHAM_STREAMER,
   KIM_STREAMER,
   GRACE_STREAMER,
   MIGUEL_STREAMER,
   TOP_STREAMER,
-  IRADA_STREAMER,
 ] as const;
 
 export const STREAMER_SLUGS = [
@@ -1592,13 +1389,11 @@ export const STREAMER_SLUGS = [
   "william",
   "ammy",
   "zen",
-  "nutt",
   "lham",
   "kim",
   "grace",
   "miguel",
   "top",
-  "irada",
 ] as const;
 
 export function getStreamerBySlug(slug: string) {

@@ -38,3 +38,6 @@ dist-ssr
 
 # scratch QA runs — can contain a real browser profile (cookies/history/login data)
 work/
+
+# build artifact, regenerates every build/typecheck
+tsconfig.tsbuildinfo
