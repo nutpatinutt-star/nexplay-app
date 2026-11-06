@@ -1,0 +1,38 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "nexplay-streamers",
+  "compatibility_date": "2026-07-27",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "workers_dev": true,
+  "routes": [
+    { "pattern": "*.liveth.net/*", "zone_name": "liveth.net" },
+    { "pattern": "*.liveth.org/*", "zone_name": "liveth.org" }
+  ],
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "nexplay-streamers"
+    }
+  ],
+  "images": {
+    "binding": "IMAGES"
+  },
+  "d1_databases": [
+    {
+      "binding": "LINK_CLICKS_DB",
+      "database_name": "nexplay-link-clicks",
+      "database_id": "5d8fa891-de5c-40ac-848e-481818d35fd1"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

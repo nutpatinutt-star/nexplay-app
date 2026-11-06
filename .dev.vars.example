@@ -1,0 +1,4 @@
+NEXTJS_ENV=development
+
+# Meta Conversions API — secret, server-side only, never NEXT_PUBLIC_.
+META_CAPI_ACCESS_TOKEN=
