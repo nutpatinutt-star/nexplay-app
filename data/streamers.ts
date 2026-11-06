@@ -405,7 +405,7 @@ export const NEXPLAY_HALLOWEEN_MODE = false;
  * `[data-seasonal="halloween"]` one scripts/sync-streamer-enjoy-ui.mjs
  * clones for other streamers, so this never leaks past Enjoy. Flip to
  * false to go back to the shared Halloween-tier art immediately. */
-export const NEXPLAY_PINK_CARDS_MODE = true;
+export const NEXPLAY_PINK_CARDS_MODE = false;
 
 const NEXPLAY_DEFAULT_LOOK = {
   heroImage: "/streamers/nexplay/hero-default.png",
