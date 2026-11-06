@@ -26,6 +26,7 @@ import {
   useState,
 } from "react";
 import BottomNavigation from "@/components/BottomNavigation";
+import DepositPromoPopup from "@/components/DepositPromoPopup";
 import PullToRefresh from "@/components/PullToRefresh";
 import {
   getStreamerBySlug,
@@ -496,6 +497,7 @@ export default function AppFrame({
           )}
         </AnimatePresence>
       </div>
+      <DepositPromoPopup streamerSlug={streamer.slug} />
     </MotionConfig>
   );
 }
