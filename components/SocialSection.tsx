@@ -55,6 +55,13 @@ export default function SocialSection({
 }: {
   streamer: StreamerConfig;
 }) {
+  const isBengali = streamer.locale === "bn";
+  // Slade (and any other singleCta streamer) has no LINE account — Bangladesh
+  // doesn't use LINE, so that tile would never have a real destination.
+  const items = streamer.singleCta
+    ? SOCIAL_ITEMS.filter((item) => item.key !== "line")
+    : SOCIAL_ITEMS;
+
   return (
     <section className="content-section social-section">
       <SectionHeader
@@ -70,9 +77,10 @@ export default function SocialSection({
           ) : undefined
         }
         href={streamerRoute(streamer, "/follow")}
+        viewAllLabel={isBengali ? "সব দেখুন" : undefined}
       />
       <div className="social-strip no-scrollbar">
-        {SOCIAL_ITEMS.map((item, index) => {
+        {items.map((item) => {
           const Icon = item.icon;
           const followers = streamer.socialFollowers[item.key];
           const href = streamer.links[item.key];
@@ -83,11 +91,11 @@ export default function SocialSection({
               href={href}
               external
               className={`social-item social-${item.tone}`}
-              ariaLabel={`ติดตาม ${item.label} ${followers}`}
-              delay={index * 0.035}
-              lift={5}
-              hoverScale={1.018}
-              tapScale={0.975}
+              ariaLabel={
+                isBengali
+                  ? `${item.label} ফলো করুন ${followers}`
+                  : `ติดตาม ${item.label} ${followers}`
+              }
               onClick={() => {
                 if (item.key === "line") {
                   trackLinkClick(streamer.slug, "line");
@@ -118,15 +126,21 @@ export default function SocialSection({
                   <BadgeCheck
                     className="social-verified"
                     size={14}
-                    aria-label="บัญชียืนยันแล้ว"
+                    aria-label={isBengali ? "ভেরিফাইড অ্যাকাউন্ট" : "บัญชียืนยันแล้ว"}
                   />
                 </strong>
-                <small>{isAvailable ? followers : "เร็วๆ นี้"}</small>
+                <small>
+                  {isAvailable
+                    ? followers
+                    : isBengali
+                      ? "শীঘ্রই আসছে"
+                      : "เร็วๆ นี้"}
+                </small>
               </span>
               <span className="social-follow">
                 {isAvailable ? (
                   <>
-                    ติดตาม
+                    {isBengali ? "ফলো করুন" : "ติดตาม"}
                     <ArrowRight size={13} />
                   </>
                 ) : (

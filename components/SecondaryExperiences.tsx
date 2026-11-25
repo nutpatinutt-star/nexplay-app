@@ -16,7 +16,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import PromoCardArt from "@/components/PromoCardArt";
-import { halloweenPromoArt, PROMOTIONS } from "@/data/promotions";
+import { getPromotionsFor, halloweenPromoArt } from "@/data/promotions";
 import {
   DEFAULT_STREAMER,
   streamerRoute,
@@ -31,18 +31,20 @@ function PageHeading({
   title,
   description,
   backHref,
+  isBengali,
 }: {
   eyebrow: string;
   title: string;
   description: string;
   backHref: string;
+  isBengali?: boolean;
 }) {
   return (
     <section className="page-heading neon-panel">
       <div className="page-heading-glow" aria-hidden="true" />
       <Link href={backHref} className="back-link">
         <ArrowLeft size={15} />
-        หน้าหลัก
+        {isBengali ? "হোম" : "หน้าหลัก"}
       </Link>
       <p>{eyebrow}</p>
       <h1>{title}</h1>
@@ -57,18 +59,25 @@ export function PromotionsExperience({
   streamer?: StreamerConfig;
 }) {
   const reduceMotion = useReducedMotion();
+  const isBengali = streamer.locale === "bn";
+  const promotions = getPromotionsFor(streamer);
 
   return (
     <main className="secondary-main">
       <PageHeading
-        eyebrow="NEXPLAY REWARDS"
-        title="โปรโมชั่นทั้งหมด"
-        description={`รวมโบนัสและสิทธิพิเศษที่คัดมาเพื่อสมาชิก ${streamer.name}`}
+        eyebrow={isBengali ? "SLADE OFFERS" : "NEXPLAY REWARDS"}
+        title={isBengali ? "সকল অফার" : "โปรโมชั่นทั้งหมด"}
+        description={
+          isBengali
+            ? `${streamer.name} এর সদস্যদের জন্য বিশেষ অফার`
+            : `รวมโบนัสและสิทธิพิเศษที่คัดมาเพื่อสมาชิก ${streamer.name}`
+        }
         backHref={streamerRoute(streamer, "")}
+        isBengali={isBengali}
       />
 
       <div className="promotion-list">
-        {PROMOTIONS.map((promotion, index) => {
+        {promotions.map((promotion, index) => {
           const comingSoon = promotion.availability === "coming-soon";
           const ctaUrl =
             promotion.ctaTarget === "line"
@@ -109,7 +118,7 @@ export function PromotionsExperience({
               {comingSoon && (
                 <span className="promotion-coming-status">
                   <Clock3 size={13} />
-                  เร็ว ๆ นี้
+                  {isBengali ? "শীঘ্রই আসছে" : "เร็ว ๆ นี้"}
                 </span>
               )}
               <div className="promotion-list-content">
@@ -123,7 +132,7 @@ export function PromotionsExperience({
                     className="promo-cta promo-cta-coming"
                     aria-disabled="true"
                   >
-                    ยังไม่เปิดให้บริการ
+                    {isBengali ? "শীঘ্রই চালু হবে" : "ยังไม่เปิดให้บริการ"}
                     <Clock3 size={13} />
                   </span>
                 ) : (
@@ -176,8 +185,12 @@ export function PromotionsExperience({
       <section className="terms-note glass-panel">
         <ShieldCheck size={20} />
         <div>
-          <strong>เงื่อนไขโปรโมชั่น</strong>
-          <p>โปรดตรวจสอบรายละเอียดของแต่ละโปรโมชั่นก่อนรับสิทธิ์</p>
+          <strong>{isBengali ? "শর্তাবলী" : "เงื่อนไขโปรโมชั่น"}</strong>
+          <p>
+            {isBengali
+              ? "সুবিধা নেওয়ার আগে প্রতিটি অফারের বিস্তারিত দেখে নিন"
+              : "โปรดตรวจสอบรายละเอียดของแต่ละโปรโมชั่นก่อนรับสิทธิ์"}
+          </p>
         </div>
       </section>
     </main>
@@ -189,20 +202,37 @@ const LIVE_SLOTS = [
   { label: "รอบค่ำ", time: "19:00 – 21:00" },
 ];
 
+const LIVE_SLOTS_BN = [
+  { label: "দিনের সেশন", time: "1:00 – 3:00 PM" },
+  { label: "সন্ধ্যার সেশন", time: "7:00 – 9:00 PM" },
+];
+
 export function FollowExperience({
   streamer = DEFAULT_STREAMER,
 }: {
   streamer?: StreamerConfig;
 }) {
   const reduceMotion = useReducedMotion();
+  const isBengali = streamer.locale === "bn";
+  const liveSlots = isBengali ? LIVE_SLOTS_BN : LIVE_SLOTS;
+  // Slade has no LINE — the "connect" card repeats the register link instead,
+  // same reasoning as the CTA row's second button.
+  const connectHref = streamer.singleCta
+    ? streamer.links.register
+    : streamer.links.line;
 
   return (
     <main className="secondary-main">
       <PageHeading
         eyebrow="STAY CONNECTED"
-        title={`ติดตาม ${streamer.name}`}
-        description="ไม่พลาดไลฟ์ โปรโมชั่นใหม่ และสิทธิพิเศษสำหรับสมาชิก"
+        title={isBengali ? `${streamer.name} কে ফলো করুন` : `ติดตาม ${streamer.name}`}
+        description={
+          isBengali
+            ? "লাইভ, নতুন অফার এবং সদস্যদের জন্য বিশেষ সুবিধা মিস করবেন না"
+            : "ไม่พลาดไลฟ์ โปรโมชั่นใหม่ และสิทธิพิเศษสำหรับสมาชิก"
+        }
         backHref={streamerRoute(streamer, "")}
+        isBengali={isBengali}
       />
 
       <motion.section
@@ -222,10 +252,16 @@ export function FollowExperience({
         <div className="follow-hero-copy">
           <span className="live-badge">LIVE</span>
           <h2>
-            ไลฟ์ทุกวัน
-            <span>พร้อมโบนัสทันใจ</span>
+            {isBengali ? "প্রতিদিন লাইভ" : "ไลฟ์ทุกวัน"}
+            <span>
+              {isBengali ? "সাথে তাৎক্ষণিক বোনাস" : "พร้อมโบนัสทันใจ"}
+            </span>
           </h2>
-          <p>ติดตามช่องทางหลักเพื่อรับแจ้งเตือนก่อนเริ่มไลฟ์</p>
+          <p>
+            {isBengali
+              ? "লাইভ শুরুর আগে নোটিফিকেশন পেতে মূল চ্যানেল ফলো করুন"
+              : "ติดตามช่องทางหลักเพื่อรับแจ้งเตือนก่อนเริ่มไลฟ์"}
+          </p>
         </div>
       </motion.section>
 
@@ -239,15 +275,35 @@ export function FollowExperience({
           <MessageCircle size={27} />
         </span>
         <div>
-          <small>LINE OFFICIAL</small>
-          <h2>ช่องทางติดตามหลัก</h2>
-          <p>รับข่าว โปรโมชั่น และติดต่อทีมงานได้โดยตรง</p>
+          <small>{streamer.singleCta ? "OFFICIAL" : "LINE OFFICIAL"}</small>
+          <h2>{isBengali ? "প্রধান যোগাযোগ" : "ช่องทางติดตามหลัก"}</h2>
+          <p>
+            {isBengali
+              ? "রেজিস্ট্রেশন করে সর্বশেষ অফার ও বোনাস পান"
+              : "รับข่าว โปรโมชั่น และติดต่อทีมงานได้โดยตรง"}
+          </p>
         </div>
         <a
-          {...externalLinkProps(streamer.links.line)}
+          {...externalLinkProps(connectHref)}
           className="line-connect-cta"
-          aria-label={`เพิ่มเพื่อน ${streamer.name} ทาง LINE`}
+          aria-label={
+            isBengali
+              ? `${streamer.name} তে রেজিস্ট্রেশন করুন`
+              : `เพิ่มเพื่อน ${streamer.name} ทาง LINE`
+          }
           onClick={() => {
+            if (streamer.singleCta) {
+              trackLinkClick(streamer.slug, "register");
+              trackEvent("register_click", {
+                streamer_slug: streamer.slug,
+                placement: "follow_page",
+              });
+              trackMetaEvent("Lead", {
+                content_name: "register",
+                streamer_slug: streamer.slug,
+              });
+              return;
+            }
             trackLinkClick(streamer.slug, "line");
             trackEvent("line_click", {
               streamer_slug: streamer.slug,
@@ -259,7 +315,7 @@ export function FollowExperience({
             });
           }}
         >
-          เพิ่มเพื่อน
+          {isBengali ? "রেজিস্ট্রেশন" : "เพิ่มเพื่อน"}
           <ArrowRight size={15} />
         </a>
       </motion.section>
@@ -268,11 +324,11 @@ export function FollowExperience({
         <div className="section-heading">
           <h2>
             <Radio size={17} />
-            ตารางไลฟ์ประจำวัน
+            {isBengali ? "প্রতিদিনের লাইভ সময়সূচী" : "ตารางไลฟ์ประจำวัน"}
           </h2>
         </div>
         <div className="live-slot-grid">
-          {LIVE_SLOTS.map((slot, index) => (
+          {liveSlots.map((slot, index) => (
             <motion.article
               key={slot.label}
               className="live-slot glass-panel"
@@ -285,7 +341,7 @@ export function FollowExperience({
               </span>
               <small>{slot.label}</small>
               <strong>{slot.time}</strong>
-              <p>ทุกวัน</p>
+              <p>{isBengali ? "প্রতিদিন" : "ทุกวัน"}</p>
             </motion.article>
           ))}
         </div>
@@ -298,15 +354,22 @@ export function FollowExperience({
           </span>
           <div>
             <small>MEMBER UPDATES</small>
-            <h2>ติดตามแล้วได้อะไร?</h2>
+            <h2>{isBengali ? "ফলো করলে কী পাবেন?" : "ติดตามแล้วได้อะไร?"}</h2>
           </div>
         </div>
         <ul>
-          {[
-            "แจ้งเตือนก่อนเริ่มไลฟ์ทุกช่วง",
-            "อัปเดตโปรโมชั่นและเครดิตฟรีล่าสุด",
-            "ช่องทางติดต่อทีมงานได้โดยตรง",
-          ].map((benefit) => (
+          {(isBengali
+            ? [
+                "প্রতিটি লাইভ শুরুর আগে নোটিফিকেশন",
+                "সর্বশেষ অফার ও বোনাস আপডেট",
+                "সরাসরি সাপোর্ট যোগাযোগ",
+              ]
+            : [
+                "แจ้งเตือนก่อนเริ่มไลฟ์ทุกช่วง",
+                "อัปเดตโปรโมชั่นและเครดิตฟรีล่าสุด",
+                "ช่องทางติดต่อทีมงานได้โดยตรง",
+              ]
+          ).map((benefit) => (
             <li key={benefit}>
               <span>
                 <Check size={13} />
@@ -319,7 +382,11 @@ export function FollowExperience({
 
       <section className="follow-footer-note">
         <Sparkles size={17} />
-        <span>ข่าวสารและสิทธิพิเศษทั้งหมดจาก {streamer.name}</span>
+        <span>
+          {isBengali
+            ? `${streamer.name} থেকে সব খবর ও বিশেষ সুবিধা`
+            : `ข่าวสารและสิทธิพิเศษทั้งหมดจาก ${streamer.name}`}
+        </span>
         <Gift size={17} />
       </section>
     </main>

@@ -6,12 +6,14 @@ type SectionHeaderProps = {
   icon?: ReactNode;
   title: string;
   href?: string;
+  viewAllLabel?: string;
 };
 
 export default function SectionHeader({
   icon,
   title,
   href,
+  viewAllLabel = "ดูทั้งหมด",
 }: SectionHeaderProps) {
   return (
     <div className="section-heading">
@@ -21,7 +23,7 @@ export default function SectionHeader({
       </h2>
       {href && (
         <Link href={href} className="section-link">
-          ดูทั้งหมด
+          {viewAllLabel}
           <ChevronRight size={14} />
         </Link>
       )}

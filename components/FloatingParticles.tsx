@@ -7,7 +7,11 @@ type FloatingParticlesProps = {
   count?: number;
 };
 
-const HERO_PARTICLES = Array.from({ length: 22 }, (_, index) => ({
+// Was 22 — halved to cut concurrently-animating composited layers on
+// low/mid-range phones, where each of these is its own GPU layer running
+// forever. Positions still look evenly scattered since the x/y formula
+// below is modulo-based, not index-order-dependent.
+const HERO_PARTICLES = Array.from({ length: 13 }, (_, index) => ({
   x: `${7 + ((index * 37) % 89)}%`,
   y: `${8 + ((index * 29) % 78)}%`,
   size: `${2 + (index % 4)}px`,
@@ -49,7 +53,7 @@ export default function FloatingParticles({
     );
   }
 
-  const particleCount = count ?? 5;
+  const particleCount = count ?? 3;
   return (
     <span className="promo-particles" aria-hidden="true">
       {Array.from({ length: particleCount }, (_, index) => (

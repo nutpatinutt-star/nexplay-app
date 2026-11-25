@@ -121,3 +121,37 @@ export const PROMOTIONS: Promotion[] = [
 export const ACTIVE_PROMOTIONS = PROMOTIONS.filter(
   (promotion) => promotion.availability === "active",
 );
+
+/** Slade (Bangladesh, Taka) — only the one offer actually confirmed for this
+ * brand. The Thai PROMOTIONS above are a different operator's THB-denominated
+ * terms (20% deposit bonus, VIP, etc.) that don't apply here, so this is its
+ * own short list rather than a translation of theirs. Add more cards here
+ * once/if there are more real Slade offers to show. */
+export const SLADE_PROMOTIONS: Promotion[] = [
+  {
+    id: "slade-register-bonus",
+    icon: "deposit",
+    badge: "নতুন",
+    category: "New Member Bonus",
+    title: "রেজিস্ট্রেশন বোনাস",
+    detail: "নতুন রেজিস্ট্রেশনে ৫০০ টাকা ফ্রি বোনাস",
+    accent: "red",
+    cta: "এখনই রেজিস্ট্রেশন করুন",
+    availability: "active",
+    ctaTarget: "register",
+  },
+];
+
+export function getPromotionsFor(streamer: {
+  locale?: "th" | "bn";
+}): Promotion[] {
+  return streamer.locale === "bn" ? SLADE_PROMOTIONS : PROMOTIONS;
+}
+
+export function getActivePromotionsFor(streamer: {
+  locale?: "th" | "bn";
+}): Promotion[] {
+  return getPromotionsFor(streamer).filter(
+    (promotion) => promotion.availability === "active",
+  );
+}

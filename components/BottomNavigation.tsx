@@ -106,20 +106,28 @@ function LiveSchedulePopup({
           </span>
           <div>
             <span>{streamer.displayName}</span>
-            <h2 id="schedule-title">ตารางไลฟ์ประจำวัน</h2>
+            <h2 id="schedule-title">
+              {streamer.locale === "bn"
+                ? "প্রতিদিনের লাইভ সময়সূচী"
+                : "ตารางไลฟ์ประจำวัน"}
+            </h2>
           </div>
           <button
             type="button"
             className="schedule-close"
             onClick={close}
-            aria-label="ปิดตารางไลฟ์"
+            aria-label={
+              streamer.locale === "bn" ? "সময়সূচী বন্ধ করুন" : "ปิดตารางไลฟ์"
+            }
           >
             <X size={19} />
           </button>
         </div>
 
         <p className="schedule-description">
-          พบกับสตรีมเมอร์และกิจกรรมโบนัสสดได้ทุกวัน
+          {streamer.locale === "bn"
+            ? "প্রতিদিন স্ট্রিমার এবং লাইভ বোনাস ইভেন্ট উপভোগ করুন"
+            : "พบกับสตรีมเมอร์และกิจกรรมโบนัสสดได้ทุกวัน"}
         </p>
 
         <div className="schedule-slots">
@@ -128,7 +136,9 @@ function LiveSchedulePopup({
               <Clock3 size={19} />
             </span>
             <div>
-              <small>รอบกลางวัน</small>
+              <small>
+                {streamer.locale === "bn" ? "দিনের সেশন" : "รอบกลางวัน"}
+              </small>
               <strong>1:00 – 3:00 PM</strong>
             </div>
             <span className="schedule-live-pill">LIVE</span>
@@ -138,7 +148,9 @@ function LiveSchedulePopup({
               <Clock3 size={19} />
             </span>
             <div>
-              <small>รอบค่ำ</small>
+              <small>
+                {streamer.locale === "bn" ? "সন্ধ্যার সেশন" : "รอบค่ำ"}
+              </small>
               <strong>7:00 – 9:00 PM</strong>
             </div>
             <span className="schedule-live-pill">LIVE</span>
@@ -146,7 +158,7 @@ function LiveSchedulePopup({
         </div>
 
         <button type="button" className="schedule-dismiss" onClick={close}>
-          เข้าใจแล้ว
+          {streamer.locale === "bn" ? "বুঝেছি" : "เข้าใจแล้ว"}
         </button>
       </motion.section>
     </motion.div>
@@ -173,7 +185,41 @@ export default function BottomNavigation({
   //    fixed, then swapped here with "กิจกรรม" per feedback).
   // "หน้าแรก" and "ของฉัน" (home / schedule popup) are unchanged.
   const usesHalloweenUi = usesEnjoyHalloweenUi(streamer.slug);
-  const navItems: NavigationItem[] = [
+  const isBengali = streamer.locale === "bn";
+  const navItems: NavigationItem[] = isBengali
+    ? [
+        {
+          label: "হোম",
+          href: streamerRoute(streamer, ""),
+          icon: Home,
+          kind: "route",
+        },
+        {
+          label: "রেজিস্ট্রেশন",
+          href: streamer.links.register,
+          icon: UserPlus,
+          kind: "external",
+        },
+        {
+          label: "অফার",
+          href: streamerRoute(streamer, "/promotions"),
+          icon: Gift,
+          kind: "route",
+          center: true,
+        },
+        {
+          label: "ফলো করুন",
+          href: streamerRoute(streamer, "/follow"),
+          icon: Radio,
+          kind: "route",
+        },
+        {
+          label: "সময়সূচী",
+          icon: CalendarClock,
+          kind: "schedule",
+        },
+      ]
+    : [
     {
       label: usesHalloweenUi ? "หน้าแรก" : "หน้าหลัก",
       href: streamerRoute(streamer, ""),
@@ -225,7 +271,10 @@ export default function BottomNavigation({
 
   return (
     <>
-      <nav className="bottom-nav" aria-label="เมนูหลัก">
+      <nav
+        className="bottom-nav"
+        aria-label={streamer.locale === "bn" ? "প্রধান মেনু" : "เมนูหลัก"}
+      >
         {usesHalloweenUi && (
           <span className="nav-chase-ring" aria-hidden="true" />
         )}
@@ -371,7 +420,11 @@ export default function BottomNavigation({
                 key={item.label}
                 type="button"
                 className={`${className} bottom-nav-action`}
-                aria-label="เปิดตารางไลฟ์ประจำวัน"
+                aria-label={
+                  streamer.locale === "bn"
+                    ? "প্রতিদিনের লাইভ সময়সূচী খুলুন"
+                    : "เปิดตารางไลฟ์ประจำวัน"
+                }
                 aria-haspopup="dialog"
                 aria-expanded={scheduleOpen}
                 onClick={() => {

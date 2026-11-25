@@ -24,7 +24,9 @@ export async function generateMetadata({
   if (!streamer || streamer.slug === "nexplay") return {};
 
   const description =
-    "ติดตามไลฟ์สดได้ทุกวัน พร้อมโปรโมชั่นและสิทธิพิเศษสำหรับสมาชิก";
+    streamer.locale === "bn"
+      ? "প্রতিদিন লাইভ দেখুন এবং রেজিস্ট্রেশন করে ৫০০ টাকা ফ্রি বোনাস নিন"
+      : "ติดตามไลฟ์สดได้ทุกวัน พร้อมโปรโมชั่นและสิทธิพิเศษสำหรับสมาชิก";
 
   return {
     title: streamer.displayName,

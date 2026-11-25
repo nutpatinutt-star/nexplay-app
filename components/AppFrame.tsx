@@ -33,10 +33,6 @@ import {
   getStreamerFromPathname,
   AMMY_HALLOWEEN_MODE,
   GRACE_HALLOWEEN_MODE,
-  HOLDEN_HALLOWEEN_MODE,
-  IVY_HALLOWEEN_MODE,
-  KIM_HALLOWEEN_MODE,
-  LHAM_HALLOWEEN_MODE,
   LILIN_HALLOWEEN_MODE,
   LILY_HALLOWEEN_MODE,
   MIGUEL_HALLOWEEN_MODE,
@@ -70,7 +66,11 @@ function Header({
       <Link
         href={streamerRoute(streamer, "")}
         className="brand-lockup"
-        aria-label={`${streamer.displayName} หน้าหลัก`}
+        aria-label={
+          streamer.locale === "bn"
+            ? `${streamer.displayName} হোম পেজ`
+            : `${streamer.displayName} หน้าหลัก`
+        }
       >
         <span className="brand-mark" aria-hidden="true">
           {usesEnjoyHalloweenUi(streamer.slug) ? (
@@ -88,7 +88,7 @@ function Header({
           type="button"
           className="icon-button"
           onClick={() => onOpen("search")}
-          aria-label="ค้นหา"
+          aria-label={streamer.locale === "bn" ? "খুঁজুন" : "ค้นหา"}
         >
           <Search size={20} />
         </button>
@@ -96,7 +96,9 @@ function Header({
           type="button"
           className="icon-button notification-button"
           onClick={() => onOpen("notifications")}
-          aria-label="การแจ้งเตือน"
+          aria-label={
+            streamer.locale === "bn" ? "নোটিফিকেশন" : "การแจ้งเตือน"
+          }
         >
           <Bell size={20} />
           <span className="notification-dot" aria-hidden="true" />
@@ -114,40 +116,62 @@ function SearchPanel({
   streamer: StreamerConfig;
 }) {
   const [query, setQuery] = useState("");
+  const isBengali = streamer.locale === "bn";
   const searchItems = useMemo(
-    () => [
-      {
-        label: "ลงทะเบียนสมาชิก",
-        href: streamer.links.register,
-        external: true,
-        linkType: "register" as const,
-      },
-      {
-        label: "เพิ่มเพื่อน LINE",
-        href: streamer.links.line,
-        external: true,
-        linkType: "line" as const,
-      },
-      {
-        label: "โปรโมชั่นทั้งหมด",
-        href: streamerRoute(streamer, "/promotions"),
-        external: false,
-      },
-      {
-        label: "ตารางไลฟ์และช่องทางติดตาม",
-        href: streamerRoute(streamer, "/follow"),
-        external: false,
-      },
-    ],
-    [streamer],
+    () =>
+      isBengali
+        ? [
+            {
+              label: "রেজিস্ট্রেশন করুন",
+              href: streamer.links.register,
+              external: true,
+              linkType: "register" as const,
+            },
+            {
+              label: "সকল অফার",
+              href: streamerRoute(streamer, "/promotions"),
+              external: false,
+            },
+            {
+              label: "ফলো ও সময়সূচী",
+              href: streamerRoute(streamer, "/follow"),
+              external: false,
+            },
+          ]
+        : [
+            {
+              label: "ลงทะเบียนสมาชิก",
+              href: streamer.links.register,
+              external: true,
+              linkType: "register" as const,
+            },
+            {
+              label: "เพิ่มเพื่อน LINE",
+              href: streamer.links.line,
+              external: true,
+              linkType: "line" as const,
+            },
+            {
+              label: "โปรโมชั่นทั้งหมด",
+              href: streamerRoute(streamer, "/promotions"),
+              external: false,
+            },
+            {
+              label: "ตารางไลฟ์และช่องทางติดตาม",
+              href: streamerRoute(streamer, "/follow"),
+              external: false,
+            },
+          ],
+    [streamer, isBengali],
   );
   const items = useMemo(() => {
-    const normalizedQuery = query.trim().toLocaleLowerCase("th");
+    const locale = isBengali ? "bn" : "th";
+    const normalizedQuery = query.trim().toLocaleLowerCase(locale);
     if (!normalizedQuery) return searchItems;
     return searchItems.filter((item) =>
-      item.label.toLocaleLowerCase("th").includes(normalizedQuery),
+      item.label.toLocaleLowerCase(locale).includes(normalizedQuery),
     );
-  }, [query, searchItems]);
+  }, [query, searchItems, isBengali]);
 
   return (
     <div>
@@ -156,7 +180,9 @@ function SearchPanel({
         <input
           value={query}
           onChange={(event) => setQuery(event.target.value)}
-          placeholder="ค้นหาเมนูหรือโปรโมชั่น"
+          placeholder={
+            isBengali ? "মেনু বা অফার খুঁজুন" : "ค้นหาเมนูหรือโปรโมชั่น"
+          }
           autoFocus
         />
       </label>
@@ -202,14 +228,17 @@ function SearchPanel({
           ),
         )}
         {items.length === 0 && (
-          <p className="panel-empty">ไม่พบเมนูที่ค้นหา</p>
+          <p className="panel-empty">
+            {isBengali ? "কোনো মেনু পাওয়া যায়নি" : "ไม่พบเมนูที่ค้นหา"}
+          </p>
         )}
       </div>
     </div>
   );
 }
 
-function NotificationPanel() {
+function NotificationPanel({ streamer }: { streamer: StreamerConfig }) {
+  const isBengali = streamer.locale === "bn";
   return (
     <div className="notification-list">
       <div className="notification-item">
@@ -217,8 +246,12 @@ function NotificationPanel() {
           <Clock3 size={18} />
         </span>
         <div>
-          <strong>ไลฟ์รอบกลางวัน</strong>
-          <p>เริ่มเวลา 13:00 – 15:00 น.</p>
+          <strong>{isBengali ? "দিনের লাইভ" : "ไลฟ์รอบกลางวัน"}</strong>
+          <p>
+            {isBengali
+              ? "শুরু হবে দুপুর ১টা – ৩টায়"
+              : "เริ่มเวลา 13:00 – 15:00 น."}
+          </p>
         </div>
       </div>
       <div className="notification-item">
@@ -226,8 +259,16 @@ function NotificationPanel() {
           <Gift size={18} />
         </span>
         <div>
-          <strong>โบนัสและสิทธิพิเศษ</strong>
-          <p>ติดตาม LINE เพื่อรับข่าวก่อนใคร</p>
+          <strong>
+            {isBengali ? "বোনাস ও বিশেষ সুবিধা" : "โบนัสและสิทธิพิเศษ"}
+          </strong>
+          <p>
+            {isBengali
+              ? streamer.singleCta
+                ? "রেজিস্ট্রেশন করে ৫০০ টাকা ফ্রি বোনাস নিন"
+                : "রেজিস্ট্রেশন করে সবার আগে অফার পান"
+              : "ติดตาม LINE เพื่อรับข่าวก่อนใคร"}
+          </p>
         </div>
       </div>
     </div>
@@ -244,7 +285,14 @@ function UtilityPanel({
   streamer: StreamerConfig;
 }) {
   const reduceMotion = useReducedMotion();
-  const title = panel === "search" ? "ค้นหา" : "การแจ้งเตือน";
+  const isBengali = streamer.locale === "bn";
+  const title = isBengali
+    ? panel === "search"
+      ? "খুঁজুন"
+      : "নোটিফিকেশন"
+    : panel === "search"
+      ? "ค้นหา"
+      : "การแจ้งเตือน";
 
   return (
     <motion.div
@@ -272,7 +320,7 @@ function UtilityPanel({
             type="button"
             className="icon-button"
             onClick={close}
-            aria-label="ปิด"
+            aria-label={isBengali ? "বন্ধ করুন" : "ปิด"}
           >
             <X size={18} />
           </button>
@@ -280,7 +328,7 @@ function UtilityPanel({
         {panel === "search" ? (
           <SearchPanel close={close} streamer={streamer} />
         ) : (
-          <NotificationPanel />
+          <NotificationPanel streamer={streamer} />
         )}
       </motion.section>
     </motion.div>
@@ -296,7 +344,6 @@ export default function AppFrame({
 }) {
   const [panel, setPanel] = useState<Panel>(null);
   const pathname = usePathname();
-  const reduceMotion = useReducedMotion();
   const streamer =
     (initialStreamerSlug && getStreamerBySlug(initialStreamerSlug)) ||
     getStreamerFromPathname(pathname);
@@ -315,13 +362,7 @@ export default function AppFrame({
     streamer.slug === "nexplay" && NEXPLAY_HALLOWEEN_MODE;
   const isNexplayPinkCards =
     streamer.slug === "nexplay" && NEXPLAY_PINK_CARDS_MODE;
-  const isLhamHalloween =
-    streamer.slug === "lham" && LHAM_HALLOWEEN_MODE;
-  const isHoldenHalloween =
-    streamer.slug === "holden" && HOLDEN_HALLOWEEN_MODE;
   const isTopHalloween = streamer.slug === "top" && TOP_HALLOWEEN_MODE;
-  const isKimHalloween = streamer.slug === "kim" && KIM_HALLOWEEN_MODE;
-  const isIvyHalloween = streamer.slug === "ivy" && IVY_HALLOWEEN_MODE;
   const isWilliamHalloween =
     streamer.slug === "william" && WILLIAM_HALLOWEEN_MODE;
   const isZenHalloween = streamer.slug === "zen" && ZEN_HALLOWEEN_MODE;
@@ -340,11 +381,7 @@ export default function AppFrame({
   // on <body> instead so the gutter goes dark too, only while active.
   useEffect(() => {
     document.body.classList.toggle("nexplay-halloween-bg", isNexplayHalloween);
-    document.body.classList.toggle("lham-halloween-bg", isLhamHalloween);
-    document.body.classList.toggle("holden-halloween-bg", isHoldenHalloween);
     document.body.classList.toggle("top-halloween-bg", isTopHalloween);
-    document.body.classList.toggle("kim-halloween-bg", isKimHalloween);
-    document.body.classList.toggle("ivy-halloween-bg", isIvyHalloween);
     document.body.classList.toggle(
       "william-halloween-bg",
       isWilliamHalloween,
@@ -357,11 +394,7 @@ export default function AppFrame({
     document.body.classList.toggle("grace-halloween-bg", isGraceHalloween);
     return () => {
       document.body.classList.remove("nexplay-halloween-bg");
-      document.body.classList.remove("lham-halloween-bg");
-      document.body.classList.remove("holden-halloween-bg");
       document.body.classList.remove("top-halloween-bg");
-      document.body.classList.remove("kim-halloween-bg");
-      document.body.classList.remove("ivy-halloween-bg");
       document.body.classList.remove("william-halloween-bg");
       document.body.classList.remove("zen-halloween-bg");
       document.body.classList.remove("lily-halloween-bg");
@@ -372,11 +405,7 @@ export default function AppFrame({
     };
   }, [
     isNexplayHalloween,
-    isLhamHalloween,
-    isHoldenHalloween,
     isTopHalloween,
-    isKimHalloween,
-    isIvyHalloween,
     isWilliamHalloween,
     isZenHalloween,
     isLilyHalloween,
@@ -397,32 +426,6 @@ export default function AppFrame({
     trackLinkClick(streamer.slug, "visit");
   }, [streamer.slug]);
 
-  useEffect(() => {
-    if (reduceMotion) return;
-
-    const createRipple = (event: PointerEvent) => {
-      if (!(event.target instanceof Element)) return;
-      const target = event.target.closest<HTMLElement>("a, button");
-      if (!target || target.getAttribute("aria-disabled") === "true") return;
-
-      const rect = target.getBoundingClientRect();
-      const size = Math.max(rect.width, rect.height) * 1.75;
-      const ripple = document.createElement("span");
-      ripple.className = "global-tap-ripple";
-      ripple.style.width = `${size}px`;
-      ripple.style.height = `${size}px`;
-      ripple.style.left = `${event.clientX - size / 2}px`;
-      ripple.style.top = `${event.clientY - size / 2}px`;
-      document.body.appendChild(ripple);
-      ripple.addEventListener("animationend", () => ripple.remove(), {
-        once: true,
-      });
-    };
-
-    document.addEventListener("pointerdown", createRipple, { passive: true });
-    return () => document.removeEventListener("pointerdown", createRipple);
-  }, [reduceMotion]);
-
   return (
     <MotionConfig
       reducedMotion="user"
@@ -440,51 +443,10 @@ export default function AppFrame({
         data-enjoy-cards={isNexplayPinkCards ? "pink" : undefined}
         style={themeStyle}
       >
-        <div className="ambient-layer" aria-hidden="true">
-          <span className="ambient-mesh" />
-          <span className="ambient-noise" />
-        </div>
-        <PullToRefresh />
+        <PullToRefresh isBengali={streamer.locale === "bn"} />
         <div className="page-layer">
           <Header onOpen={setPanel} streamer={streamer} />
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={pathname}
-              className="page-transition-shell"
-              initial={
-                reduceMotion
-                  ? false
-                  : { opacity: 0, y: 9, scale: 0.995 }
-              }
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={
-                reduceMotion
-                  ? undefined
-                  : { opacity: 0, y: -6, scale: 0.998 }
-              }
-              transition={
-                reduceMotion
-                  ? { duration: 0 }
-                  : {
-                      y: {
-                        type: "spring",
-                        stiffness: 440,
-                        damping: 34,
-                        mass: 0.64,
-                      },
-                      scale: {
-                        type: "spring",
-                        stiffness: 420,
-                        damping: 34,
-                        mass: 0.62,
-                      },
-                      opacity: { duration: 0.22, ease: "easeOut" },
-                    }
-              }
-            >
-              {children}
-            </motion.div>
-          </AnimatePresence>
+          <div className="page-transition-shell">{children}</div>
           <BottomNavigation streamer={streamer} />
         </div>
         <AnimatePresence>
@@ -497,7 +459,12 @@ export default function AppFrame({
           )}
         </AnimatePresence>
       </div>
-      <DepositPromoPopup streamerSlug={streamer.slug} />
+      {/* Thai THB-denominated deposit-bonus art — doesn't apply to singleCta
+         streamers like Slade, whose real offer (register bonus) is already
+         the page's only CTA. */}
+      {!streamer.singleCta && (
+        <DepositPromoPopup streamerSlug={streamer.slug} />
+      )}
     </MotionConfig>
   );
 }

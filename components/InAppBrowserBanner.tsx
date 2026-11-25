@@ -1,7 +1,9 @@
 "use client";
 
 import { ExternalLink } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { getStreamerBySlug, getStreamerFromPathname } from "@/data/streamers";
 
 /** Facebook/Instagram's in-app WebView is known to fail on heavy JS pages,
  * and — separately — to deliberately block custom URL-scheme launches (e.g.
@@ -36,10 +38,25 @@ function iosSafariUrl() {
   return `x-safari-https://${host}${pathname}${search}`;
 }
 
-export default function InAppBrowserBanner() {
+export default function InAppBrowserBanner({
+  initialStreamerSlug,
+}: {
+  initialStreamerSlug?: string | null;
+}) {
   const [platform, setPlatform] = useState<"android" | "ios" | null>(null);
+  const pathname = usePathname();
+  const streamer =
+    (initialStreamerSlug && getStreamerBySlug(initialStreamerSlug)) ||
+    getStreamerFromPathname(pathname);
+  // The whole reason this gate exists is that Meta's in-app browser blocks
+  // the `line://` custom URL scheme — singleCta streamers (e.g. Slade) have
+  // no LINE link at all, just a plain https register URL that opens fine
+  // inside Facebook/Instagram's WebView, so the gate would only block real
+  // ad traffic from ever reaching the page for no reason.
+  const gateApplies = !streamer.singleCta;
 
   useEffect(() => {
+    if (!gateApplies) return;
     const detected = detectMetaInAppBrowser(navigator.userAgent);
     setPlatform(detected);
     if (!detected) return;
@@ -58,7 +75,7 @@ export default function InAppBrowserBanner() {
     } else if (detected === "ios") {
       window.location.href = iosSafariUrl();
     }
-  }, []);
+  }, [gateApplies]);
 
   if (!platform) return null;
 

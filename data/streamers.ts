@@ -15,34 +15,39 @@ export type StreamerHeroSlide = {
 export type StreamerConfig = {
   slug:
     | "nexplay"
-    | "holden"
     | "lily"
-    | "ivy"
     | "lilin"
     | "william"
     | "ammy"
     | "zen"
-    | "lham"
-    | "kim"
     | "grace"
     | "miguel"
-    | "top";
+    | "top"
+    | "slade";
   name: string;
   displayName: string;
+  /** Overrides the page language/copy for streamers whose audience isn't
+   * Thai-speaking. Undefined (the default) means Thai — nothing changes
+   * for any existing streamer. Components that render fixed Thai chrome
+   * text (nav labels, schedule popup, search panel, etc.) branch on this. */
+  locale?: "th" | "bn";
+  /** True for streamers with no second contact channel (no LINE OA, no
+   * socials yet) — e.g. Slade, whose funnel is a single register link.
+   * Components hide LINE-dependent UI (ADD LINE button, social section,
+   * promotions carousel/page, follow page, the in-app-browser LINE-scheme
+   * gate) instead of rendering broken/empty-href elements. */
+  singleCta?: boolean;
   basePath:
     | ""
-    | "/holden"
     | "/lily"
-    | "/ivy"
     | "/lilin"
     | "/william"
     | "/ammy"
     | "/zen"
-    | "/lham"
-    | "/kim"
     | "/grace"
     | "/miguel"
-    | "/top";
+    | "/top"
+    | "/slade";
   heroImage: string;
   avatarImage: string;
   heroAlt: string;
@@ -66,31 +71,6 @@ export type StreamerConfig = {
   heroSlides: StreamerHeroSlide[];
 };
 
-const holdenLinks: ExternalLinks = {
-  register: process.env.NEXT_PUBLIC_HOLDEN_REGISTER_URL?.trim() ?? "",
-  line: process.env.NEXT_PUBLIC_HOLDEN_LINE_OA_URL?.trim() ?? "",
-  lineAds:
-    process.env.NEXT_PUBLIC_HOLDEN_LINE_OA_ADS_URL?.trim() ??
-    process.env.NEXT_PUBLIC_HOLDEN_LINE_OA_URL?.trim() ??
-    "",
-  claimPromo:
-    process.env.NEXT_PUBLIC_HOLDEN_CLAIM_PROMO_URL?.trim() ??
-    process.env.NEXT_PUBLIC_HOLDEN_REGISTER_URL?.trim() ??
-    "",
-  support:
-    process.env.NEXT_PUBLIC_HOLDEN_SUPPORT_URL?.trim() ??
-    process.env.NEXT_PUBLIC_HOLDEN_LINE_OA_URL?.trim() ??
-    "",
-  facebook: process.env.NEXT_PUBLIC_HOLDEN_FACEBOOK_URL?.trim() ?? "",
-  instagram: process.env.NEXT_PUBLIC_HOLDEN_INSTAGRAM_URL?.trim() ?? "",
-  tiktok: process.env.NEXT_PUBLIC_HOLDEN_TIKTOK_URL?.trim() ?? "",
-  youtube: "",
-  discord: "",
-  vip: "",
-  wallet: "",
-  profile: "",
-};
-
 const lilyLinks: ExternalLinks = {
   register: process.env.NEXT_PUBLIC_LILLY_REGISTER_URL?.trim() ?? "",
   line: process.env.NEXT_PUBLIC_LILLY_LINE_OA_URL?.trim() ?? "",
@@ -109,31 +89,6 @@ const lilyLinks: ExternalLinks = {
   facebook: process.env.NEXT_PUBLIC_LILLY_FACEBOOK_URL?.trim() ?? "",
   instagram: process.env.NEXT_PUBLIC_LILLY_INSTAGRAM_URL?.trim() ?? "",
   tiktok: process.env.NEXT_PUBLIC_LILLY_TIKTOK_URL?.trim() ?? "",
-  youtube: "",
-  discord: "",
-  vip: "",
-  wallet: "",
-  profile: "",
-};
-
-const ivyLinks: ExternalLinks = {
-  register: process.env.NEXT_PUBLIC_IVY_REGISTER_URL?.trim() ?? "",
-  line: process.env.NEXT_PUBLIC_IVY_LINE_OA_URL?.trim() ?? "",
-  lineAds:
-    process.env.NEXT_PUBLIC_IVY_LINE_OA_ADS_URL?.trim() ??
-    process.env.NEXT_PUBLIC_IVY_LINE_OA_URL?.trim() ??
-    "",
-  claimPromo:
-    process.env.NEXT_PUBLIC_IVY_CLAIM_PROMO_URL?.trim() ??
-    process.env.NEXT_PUBLIC_IVY_REGISTER_URL?.trim() ??
-    "",
-  support:
-    process.env.NEXT_PUBLIC_IVY_SUPPORT_URL?.trim() ??
-    process.env.NEXT_PUBLIC_IVY_LINE_OA_URL?.trim() ??
-    "",
-  facebook: process.env.NEXT_PUBLIC_IVY_FACEBOOK_URL?.trim() ?? "",
-  instagram: process.env.NEXT_PUBLIC_IVY_INSTAGRAM_URL?.trim() ?? "",
-  tiktok: process.env.NEXT_PUBLIC_IVY_TIKTOK_URL?.trim() ?? "",
   youtube: "",
   discord: "",
   vip: "",
@@ -241,55 +196,6 @@ const zenLinks: ExternalLinks = {
   profile: "",
 };
 
-const lhamLinks: ExternalLinks = {
-  register: process.env.NEXT_PUBLIC_LHAM_REGISTER_URL?.trim() ?? "",
-  line: process.env.NEXT_PUBLIC_LHAM_LINE_OA_URL?.trim() ?? "",
-  lineAds:
-    process.env.NEXT_PUBLIC_LHAM_LINE_OA_ADS_URL?.trim() ??
-    process.env.NEXT_PUBLIC_LHAM_LINE_OA_URL?.trim() ??
-    "",
-  claimPromo:
-    process.env.NEXT_PUBLIC_LHAM_CLAIM_PROMO_URL?.trim() ??
-    process.env.NEXT_PUBLIC_LHAM_REGISTER_URL?.trim() ??
-    "",
-  support:
-    process.env.NEXT_PUBLIC_LHAM_SUPPORT_URL?.trim() ??
-    process.env.NEXT_PUBLIC_LHAM_LINE_OA_URL?.trim() ??
-    "",
-  facebook: process.env.NEXT_PUBLIC_LHAM_FACEBOOK_URL?.trim() ?? "",
-  instagram: process.env.NEXT_PUBLIC_LHAM_INSTAGRAM_URL?.trim() ?? "",
-  tiktok: process.env.NEXT_PUBLIC_LHAM_TIKTOK_URL?.trim() ?? "",
-  youtube: "",
-  discord: "",
-  vip: "",
-  wallet: "",
-  profile: "",
-};
-
-const kimLinks: ExternalLinks = {
-  register: process.env.NEXT_PUBLIC_KIM_REGISTER_URL?.trim() ?? "",
-  line: process.env.NEXT_PUBLIC_KIM_LINE_OA_URL?.trim() ?? "",
-  lineAds:
-    process.env.NEXT_PUBLIC_KIM_LINE_OA_ADS_URL?.trim() ??
-    process.env.NEXT_PUBLIC_KIM_LINE_OA_URL?.trim() ??
-    "",
-  claimPromo:
-    process.env.NEXT_PUBLIC_KIM_CLAIM_PROMO_URL?.trim() ??
-    process.env.NEXT_PUBLIC_KIM_REGISTER_URL?.trim() ??
-    "",
-  support:
-    process.env.NEXT_PUBLIC_KIM_SUPPORT_URL?.trim() ??
-    process.env.NEXT_PUBLIC_KIM_LINE_OA_URL?.trim() ??
-    "",
-  facebook: process.env.NEXT_PUBLIC_KIM_FACEBOOK_URL?.trim() ?? "",
-  instagram: process.env.NEXT_PUBLIC_KIM_INSTAGRAM_URL?.trim() ?? "",
-  tiktok: process.env.NEXT_PUBLIC_KIM_TIKTOK_URL?.trim() ?? "",
-  youtube: "",
-  discord: "",
-  vip: "",
-  wallet: "",
-  profile: "",
-};
 
 const graceLinks: ExternalLinks = {
   register: process.env.NEXT_PUBLIC_GRACE_REGISTER_URL?.trim() ?? "",
@@ -359,6 +265,22 @@ const topLinks: ExternalLinks = {
   facebook: process.env.NEXT_PUBLIC_TOP_FACEBOOK_URL?.trim() ?? "",
   instagram: process.env.NEXT_PUBLIC_TOP_INSTAGRAM_URL?.trim() ?? "",
   tiktok: process.env.NEXT_PUBLIC_TOP_TIKTOK_URL?.trim() ?? "",
+  youtube: "",
+  discord: "",
+  vip: "",
+  wallet: "",
+  profile: "",
+};
+
+const sladeLinks: ExternalLinks = {
+  register: process.env.NEXT_PUBLIC_SLADE_REGISTER_URL?.trim() ?? "",
+  line: "",
+  lineAds: "",
+  claimPromo: process.env.NEXT_PUBLIC_SLADE_REGISTER_URL?.trim() ?? "",
+  support: "",
+  facebook: "",
+  instagram: "",
+  tiktok: "",
   youtube: "",
   discord: "",
   vip: "",
@@ -486,73 +408,6 @@ export const DEFAULT_STREAMER: StreamerConfig = {
   ],
 };
 
-/** Keep Holden's original blue look available for a one-flag revert. */
-export const HOLDEN_HALLOWEEN_MODE = false;
-
-const HOLDEN_DEFAULT_LOOK = {
-  heroImage: "/streamers/holden/hero.webp",
-  avatarImage: "/streamers/holden/avatar.webp",
-  heroAlt: "Holden พร้อมกล่องสมบัติคริสตัลสีน้ำเงิน",
-  heroTitle: "ไลฟ์สดกับ Holden",
-  heroHighlight: "สนุกและลุ้นทุกวัน",
-  theme: {
-    accent: "#2563eb",
-    accentDeep: "#1746a2",
-    accentBright: "#60a5fa",
-    accentSoft: "#dbeafe",
-    accentRgb: "37, 99, 235",
-    secondaryRgb: "6, 182, 212",
-  },
-} as const;
-
-const HOLDEN_HALLOWEEN_LOOK = {
-  heroImage: "/streamers/holden/hero-halloween.webp",
-  avatarImage: "/streamers/holden/hero-halloween.webp",
-  heroAlt: "Holden ในชุดนักบวชฮาโลวีนหน้าวิหารโกธิก แสงจันทร์และฟักทองเรืองแสง",
-  heroTitle: NEXPLAY_HALLOWEEN_LOOK.heroSlide.title,
-  heroHighlight: NEXPLAY_HALLOWEEN_LOOK.heroSlide.highlight,
-  theme: NEXPLAY_HALLOWEEN_LOOK.theme,
-} as const;
-
-/* Post-Halloween: back to Holden's own hero photo/background; shared
- * card/button/nav/social styling stays (see nexplayLook above). */
-const holdenLook = HOLDEN_DEFAULT_LOOK;
-
-export const HOLDEN_STREAMER: StreamerConfig = {
-  slug: "holden",
-  name: "HOLDEN",
-  displayName: "HOLDEN LIVE",
-  basePath: "/holden",
-  heroImage: holdenLook.heroImage,
-  avatarImage: holdenLook.avatarImage,
-  heroAlt: holdenLook.heroAlt,
-  followers: "ติดตาม Holden",
-  socialTitle: "ติดตาม Holden",
-  theme: holdenLook.theme,
-  socialFollowers: {
-    facebook: "ติดตาม Holden",
-    instagram: "ติดตาม Holden",
-    tiktok: "ติดตาม Holden",
-    line: "เพิ่มเพื่อน",
-  },
-  links: holdenLinks,
-  heroSlides: [
-    {
-      eyebrow: "HOLDEN LIVE",
-      title: holdenLook.heroTitle,
-      highlight: holdenLook.heroHighlight,
-      description: "พูดคุยสด พร้อมกิจกรรมพิเศษ\n1–3 PM · 7–9 PM",
-      cta: "เข้าไลฟ์ตอนนี้",
-      action: "line",
-    },
-    {
-      ...sharedSlides.member,
-      highlight: "รับโบนัสสูงสุด 2,000",
-    },
-    { ...sharedSlides.rewards, eyebrow: "HOLDEN REWARDS" },
-  ],
-};
-
 /* Lily — reversible Halloween mode, same shared Enjoy-tier UI as the other
  * Halloween streamers (cards, buttons, nav, social-card art are Enjoy's
  * assets, synced via scripts/sync-streamer-enjoy-ui.mjs). Only the hero
@@ -613,78 +468,6 @@ export const LILY_STREAMER: StreamerConfig = {
       eyebrow: "LILY LIVE",
       title: lilyLook.heroTitle,
       highlight: lilyLook.heroHighlight,
-      description: "พูดคุยสด พร้อมกิจกรรมพิเศษ\n1–3 PM · 7–9 PM",
-      cta: "เข้าไลฟ์ตอนนี้",
-      action: "line",
-    },
-    {
-      ...sharedSlides.member,
-      highlight: "รับโบนัสสูงสุด 2,000",
-    },
-    sharedSlides.rewards,
-  ],
-};
-
-/* Ivy — reversible Halloween mode, same shared Enjoy-tier UI as the other
- * Halloween streamers (cards, buttons, nav, social-card art are Enjoy's
- * assets, synced via scripts/sync-streamer-enjoy-ui.mjs). Only the hero
- * photo and the page-background image are Ivy's own — her background is
- * reused from Kim's scene per request. Flip IVY_HALLOWEEN_MODE to false to
- * revert to the original moss-amber look. */
-export const IVY_HALLOWEEN_MODE = false;
-
-const IVY_DEFAULT_LOOK = {
-  heroImage: "/streamers/ivy/hero.png",
-  avatarImage: "/streamers/ivy/avatar.png",
-  heroAlt: "Ivy ในธีม Midnight Lichen & Saffron Glass โทนเขียวมอส-อำพันทอง",
-  heroTitle: "ไลฟ์สดกับ Ivy",
-  heroHighlight: "สนุกหรูทุกวัน",
-  theme: {
-    accent: "#D89538",
-    accentDeep: "#9A6846",
-    accentBright: "#E8B563",
-    accentSoft: "#F5E4C9",
-    accentRgb: "216, 149, 56",
-    secondaryRgb: "24, 78, 82",
-  },
-} as const;
-
-const IVY_HALLOWEEN_LOOK = {
-  heroImage: "/streamers/ivy/hero-halloween.webp",
-  avatarImage: "/streamers/ivy/hero-halloween.webp",
-  heroAlt: "Ivy ในชุดฮาโลวีนเสื้อคลุมแดงมีฮู้ด นั่งหน้าปราสาทใต้พระจันทร์สีเลือด",
-  heroTitle: NEXPLAY_HALLOWEEN_LOOK.heroSlide.title,
-  heroHighlight: NEXPLAY_HALLOWEEN_LOOK.heroSlide.highlight,
-  theme: NEXPLAY_HALLOWEEN_LOOK.theme,
-} as const;
-
-/* Post-Halloween: back to Ivy's own hero photo/background; shared
- * card/button/nav/social styling stays (see nexplayLook above). */
-const ivyLook = IVY_DEFAULT_LOOK;
-
-export const IVY_STREAMER: StreamerConfig = {
-  slug: "ivy",
-  name: "IVY",
-  displayName: "IVY LIVE",
-  basePath: "/ivy",
-  heroImage: ivyLook.heroImage,
-  avatarImage: ivyLook.avatarImage,
-  heroAlt: ivyLook.heroAlt,
-  followers: "ติดตาม Ivy",
-  socialTitle: "ติดตาม Ivy",
-  theme: ivyLook.theme,
-  socialFollowers: {
-    facebook: "ติดตาม Ivy",
-    instagram: "ติดตาม Ivy",
-    tiktok: "ติดตาม Ivy",
-    line: "เพิ่มเพื่อน",
-  },
-  links: ivyLinks,
-  heroSlides: [
-    {
-      eyebrow: "IVY LIVE",
-      title: ivyLook.heroTitle,
-      highlight: ivyLook.heroHighlight,
       description: "พูดคุยสด พร้อมกิจกรรมพิเศษ\n1–3 PM · 7–9 PM",
       cta: "เข้าไลฟ์ตอนนี้",
       action: "line",
@@ -988,51 +771,15 @@ export const ZEN_STREAMER: StreamerConfig = {
   ],
 };
 
-/** Keep Lham's studio look intact so the Halloween artwork can be reverted. */
-export const LHAM_HALLOWEEN_MODE = false;
-
-const LHAM_DEFAULT_LOOK = {
-  heroImage: "/streamers/lham/hero.png",
-  avatarImage: "/streamers/lham/avatar.png",
-  heroAlt: "Lham ในสตูดิโอไฟนีออนม่วง-ฟ้า",
-  heroTitle: "ไลฟ์สดกับ Lham",
-  heroHighlight: "เท่ทุกวัน",
-  theme: {
-    accent: "#8B5CF6",
-    accentDeep: "#4C2E8C",
-    accentBright: "#B79CFF",
-    accentSoft: "#EDE6FF",
-    accentRgb: "139, 92, 246",
-    secondaryRgb: "34, 211, 238",
-  },
-} as const;
-
-const LHAM_HALLOWEEN_LOOK = {
-  heroImage: "/streamers/lham/hero-halloween.webp",
-  avatarImage: "/streamers/lham/hero-halloween.webp",
-  heroAlt: "Lham ในชุดฮาโลวีนหน้าปราสาท แสงจันทร์และฟักทองเรืองแสง",
-  heroTitle: NEXPLAY_HALLOWEEN_LOOK.heroSlide.title,
-  heroHighlight: NEXPLAY_HALLOWEEN_LOOK.heroSlide.highlight,
-  theme: NEXPLAY_HALLOWEEN_LOOK.theme,
-} as const;
-
-/* Post-Halloween: back to Lham's own hero photo/background; shared
- * card/button/nav/social styling stays (see nexplayLook above). */
-const lhamLook = LHAM_DEFAULT_LOOK;
-
-/** Every streamer — Enjoy, Lham, Holden, Top, Kim, Ivy, William, Zen,
- * Lily, Lilin, Miguel, Ammy and Grace — shares one Halloween UI
- * while retaining their own data. All flags are currently `false`
- * (Halloween season over, 06/11/2026) — flip the relevant one back to
- * `true` to reuse it next year; nothing else needs re-entering. */
+/** Every streamer — Enjoy, Top, William, Zen, Lily, Lilin, Miguel, Ammy
+ * and Grace — shares one Halloween UI while retaining their own data. All
+ * flags are currently `false` (Halloween season over, 06/11/2026) — flip
+ * the relevant one back to `true` to reuse it next year; nothing else
+ * needs re-entering. */
 export function usesEnjoyHalloweenUi(streamerSlug: string): boolean {
   return (
     (streamerSlug === "nexplay" && NEXPLAY_HALLOWEEN_MODE) ||
-    (streamerSlug === "lham" && LHAM_HALLOWEEN_MODE) ||
-    (streamerSlug === "holden" && HOLDEN_HALLOWEEN_MODE) ||
     (streamerSlug === "top" && TOP_HALLOWEEN_MODE) ||
-    (streamerSlug === "kim" && KIM_HALLOWEEN_MODE) ||
-    (streamerSlug === "ivy" && IVY_HALLOWEEN_MODE) ||
     (streamerSlug === "william" && WILLIAM_HALLOWEEN_MODE) ||
     (streamerSlug === "zen" && ZEN_HALLOWEEN_MODE) ||
     (streamerSlug === "lily" && LILY_HALLOWEEN_MODE) ||
@@ -1042,112 +789,6 @@ export function usesEnjoyHalloweenUi(streamerSlug: string): boolean {
     (streamerSlug === "grace" && GRACE_HALLOWEEN_MODE)
   );
 }
-
-export const LHAM_STREAMER: StreamerConfig = {
-  slug: "lham",
-  name: "LHAM",
-  displayName: "LHAM LIVE",
-  basePath: "/lham",
-  heroImage: lhamLook.heroImage,
-  avatarImage: lhamLook.avatarImage,
-  heroAlt: lhamLook.heroAlt,
-  followers: "ติดตาม Lham",
-  socialTitle: "ติดตาม Lham",
-  theme: lhamLook.theme,
-  socialFollowers: {
-    facebook: "ติดตาม Lham",
-    instagram: "ติดตาม Lham",
-    tiktok: "ติดตาม Lham",
-    line: "เพิ่มเพื่อน",
-  },
-  links: lhamLinks,
-  heroSlides: [
-    {
-      eyebrow: "LHAM LIVE",
-      title: lhamLook.heroTitle,
-      highlight: lhamLook.heroHighlight,
-      description: "พูดคุยสด พร้อมกิจกรรมพิเศษ\n1–3 PM · 7–9 PM",
-      cta: "เข้าไลฟ์ตอนนี้",
-      action: "line",
-    },
-    {
-      ...sharedSlides.member,
-      highlight: "รับโบนัสสูงสุด 2,000",
-    },
-    { ...sharedSlides.rewards, eyebrow: "LHAM REWARDS" },
-  ],
-};
-
-/* Kim — reversible Halloween mode, same shared Enjoy-tier UI as Nutt/Top
- * (cards, buttons, nav, social-card art are Enjoy's assets, synced via
- * scripts/sync-streamer-enjoy-ui.mjs). Only the hero photo and the
- * page-background image are Kim's own. Flip KIM_HALLOWEEN_MODE to false
- * to revert to the original purple-neon-studio look. */
-export const KIM_HALLOWEEN_MODE = false;
-
-const KIM_DEFAULT_LOOK = {
-  heroImage: "/streamers/kim/hero.png",
-  avatarImage: "/streamers/kim/avatar.png",
-  heroAlt: "Kim ในสตูดิโอไฟนีออนม่วงคราม-ดำ โทนเข้มขรึม",
-  heroTitle: "ไลฟ์สดกับ Kim",
-  heroHighlight: "เข้มลึกทุกวัน",
-  theme: {
-    accent: "#6C4FF2",
-    accentDeep: "#2E1B6B",
-    accentBright: "#9B7FFF",
-    accentSoft: "#E6E0FF",
-    accentRgb: "108, 79, 242",
-    secondaryRgb: "74, 85, 120",
-  },
-} as const;
-
-const KIM_HALLOWEEN_LOOK = {
-  heroImage: "/streamers/kim/hero-halloween.webp",
-  avatarImage: "/streamers/kim/hero-halloween.webp",
-  heroAlt: "Kim ในชุดตัวตลกฮาโลวีนแดง-ดำ นั่งหน้าปราสาทยามค่ำคืน แสงจันทร์และฟักทองเรืองแสง",
-  heroTitle: NEXPLAY_HALLOWEEN_LOOK.heroSlide.title,
-  heroHighlight: NEXPLAY_HALLOWEEN_LOOK.heroSlide.highlight,
-  theme: NEXPLAY_HALLOWEEN_LOOK.theme,
-} as const;
-
-/* Post-Halloween: back to Kim's own hero photo/background; shared
- * card/button/nav/social styling stays (see nexplayLook above). */
-const kimLook = KIM_DEFAULT_LOOK;
-
-export const KIM_STREAMER: StreamerConfig = {
-  slug: "kim",
-  name: "KIM",
-  displayName: "KIM LIVE",
-  basePath: "/kim",
-  heroImage: kimLook.heroImage,
-  avatarImage: kimLook.avatarImage,
-  heroAlt: kimLook.heroAlt,
-  followers: "ติดตาม Kim",
-  socialTitle: "ติดตาม Kim",
-  theme: kimLook.theme,
-  socialFollowers: {
-    facebook: "ติดตาม Kim",
-    instagram: "ติดตาม Kim",
-    tiktok: "ติดตาม Kim",
-    line: "เพิ่มเพื่อน",
-  },
-  links: kimLinks,
-  heroSlides: [
-    {
-      eyebrow: "KIM LIVE",
-      title: kimLook.heroTitle,
-      highlight: kimLook.heroHighlight,
-      description: "พูดคุยสด พร้อมกิจกรรมพิเศษ\n1–3 PM · 7–9 PM",
-      cta: "เข้าไลฟ์ตอนนี้",
-      action: "line",
-    },
-    {
-      ...sharedSlides.member,
-      highlight: "รับโบนัสสูงสุด 2,000",
-    },
-    sharedSlides.rewards,
-  ],
-};
 
 /* Grace — reversible Halloween mode, same shared Enjoy-tier UI as the
  * other Halloween streamers (cards, buttons, nav, social-card art are
@@ -1365,35 +1006,96 @@ export const TOP_STREAMER: StreamerConfig = {
   ],
 };
 
+/* Slade — Bangladesh, bdjoybg.net brand. Single-funnel landing page: one
+ * register CTA (no LINE/social channels exist yet for this brand), full
+ * Bengali copy (locale "bn"), red-gold theme matched to his hero photo.
+ * singleCta hides every LINE-dependent surface (ADD LINE button, social
+ * section, promotions carousel/page, follow page, the Meta in-app-browser
+ * gate whose whole reason for existing is blocking LINE's custom URL
+ * scheme — irrelevant here since the only link is a plain https register
+ * URL that Facebook's in-app browser opens fine). */
+const SLADE_LOOK = {
+  heroImage: "/streamers/slade/hero.webp",
+  avatarImage: "/streamers/slade/hero.webp",
+  heroAlt:
+    "Slade গিম্বলে ফোন ধরে লাইভ করছেন, পেছনে লাল-সোনালী আলোকসজ্জা এবং একটি সোনালী মূর্তি",
+  heroTitle: "Slade এর সাথে লাইভ",
+  heroHighlight: "প্রতিদিন জমজমাট বিনোদন",
+  theme: {
+    accent: "#C8282E",
+    accentDeep: "#7A1013",
+    accentBright: "#E8565C",
+    accentSoft: "#FBE6C8",
+    accentRgb: "200, 40, 46",
+    secondaryRgb: "212, 175, 55",
+  },
+} as const;
+
+export const SLADE_STREAMER: StreamerConfig = {
+  slug: "slade",
+  name: "SLADE",
+  displayName: "SLADE LIVE",
+  locale: "bn",
+  singleCta: true,
+  basePath: "/slade",
+  heroImage: SLADE_LOOK.heroImage,
+  avatarImage: SLADE_LOOK.avatarImage,
+  heroAlt: SLADE_LOOK.heroAlt,
+  followers: "অনেক দর্শক দেখছেন",
+  socialTitle: "Slade কে ফলো করুন",
+  theme: SLADE_LOOK.theme,
+  socialFollowers: {
+    facebook: "Slade কে ফলো করুন",
+    instagram: "Slade কে ফলো করুন",
+    tiktok: "Slade কে ফলো করুন",
+    line: "Slade কে ফলো করুন",
+  },
+  links: sladeLinks,
+  heroSlides: [
+    {
+      eyebrow: "SLADE LIVE",
+      title: SLADE_LOOK.heroTitle,
+      highlight: SLADE_LOOK.heroHighlight,
+      description: "প্রতিদিন লাইভ স্ট্রিম এবং বিশেষ অফার\n1–3 PM · 7–9 PM",
+      cta: "রেজিস্ট্রেশন করুন",
+      action: "register",
+    },
+    {
+      eyebrow: "নতুন সদস্য",
+      title: "আজই শুরু করুন",
+      highlight: "৫০০ টাকা ফ্রি বোনাস",
+      description:
+        "নতুন সদস্যদের জন্য বিশেষ সুবিধা\nসহজ রেজিস্ট্রেশন, সাথে সাথে ব্যবহার করুন",
+      cta: "রেজিস্ট্রেশন করুন",
+      action: "register",
+      compact: true,
+    },
+  ],
+};
+
 export const STREAMERS = [
   DEFAULT_STREAMER,
-  HOLDEN_STREAMER,
   LILY_STREAMER,
-  IVY_STREAMER,
   LILIN_STREAMER,
   WILLIAM_STREAMER,
   AMMY_STREAMER,
   ZEN_STREAMER,
-  LHAM_STREAMER,
-  KIM_STREAMER,
   GRACE_STREAMER,
   MIGUEL_STREAMER,
   TOP_STREAMER,
+  SLADE_STREAMER,
 ] as const;
 
 export const STREAMER_SLUGS = [
-  "holden",
   "lily",
-  "ivy",
   "lilin",
   "william",
   "ammy",
   "zen",
-  "lham",
-  "kim",
   "grace",
   "miguel",
   "top",
+  "slade",
 ] as const;
 
 export function getStreamerBySlug(slug: string) {

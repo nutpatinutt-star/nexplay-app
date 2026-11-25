@@ -20,12 +20,17 @@ export async function generateMetadata({
   const { streamer: slug } = await params;
   const streamer = getStreamerBySlug(slug);
 
-  return streamer && streamer.slug !== "nexplay"
+  if (!streamer || streamer.slug === "nexplay") return {};
+
+  return streamer.locale === "bn"
     ? {
+        title: `${streamer.name} কে ফলো করুন`,
+        description: `${streamer.name} এর সর্বশেষ লাইভ সময়সূচী ও যোগাযোগের মাধ্যম`,
+      }
+    : {
         title: `ติดตาม ${streamer.name}`,
         description: `ช่องทางติดตามและตารางไลฟ์ล่าสุดของ ${streamer.name}`,
-      }
-    : {};
+      };
 }
 
 export default async function StreamerFollowPage({

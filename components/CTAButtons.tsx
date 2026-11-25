@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronRight, UserPlus } from "lucide-react";
+import { ChevronRight, Gift, UserPlus } from "lucide-react";
 import AnimatedButton from "@/components/AnimatedButton";
 import { type StreamerConfig, usesEnjoyHalloweenUi } from "@/data/streamers";
 import { trackEvent, trackLinkClick } from "@/lib/analytics";
@@ -11,13 +11,28 @@ export default function CTAButtons({
 }: {
   streamer: StreamerConfig;
 }) {
+  const isBengali = streamer.locale === "bn";
+  // singleCta streamers (e.g. Slade) have no second channel — the second
+  // card still exists (same two-card template as every other streamer) but
+  // repeats the register link instead of a LINE destination it doesn't have.
+  const secondHref = streamer.singleCta
+    ? streamer.links.register
+    : streamer.links.line;
+
   return (
-    <section className="action-grid" aria-label="เมนูหลักด่วน">
+    <section
+      className="action-grid"
+      aria-label={isBengali ? "দ্রুত মেনু" : "เมนูหลักด่วน"}
+    >
       <AnimatedButton
         href={streamer.links.register}
         external
         className="action-card action-purple"
-        ariaLabel="ลงทะเบียน สมัครสมาชิกทันที"
+        ariaLabel={
+          isBengali
+            ? "রেজিস্ট্রেশন করে ৫০০ টাকা ফ্রি নিন"
+            : "ลงทะเบียน สมัครสมาชิกทันที"
+        }
         onClick={() => {
           trackLinkClick(streamer.slug, "register");
           trackEvent("register_click", {
@@ -38,26 +53,45 @@ export default function CTAButtons({
         </span>
         <span className="action-copy">
           <strong>
-            {usesEnjoyHalloweenUi(streamer.slug)
-              ? "สมัครเลย"
-              : "ลงทะเบียน"}
+            {isBengali
+              ? "রেজিস্ট্রেশন"
+              : usesEnjoyHalloweenUi(streamer.slug)
+                ? "สมัครเลย"
+                : "ลงทะเบียน"}
           </strong>
           <small>
-            {usesEnjoyHalloweenUi(streamer.slug)
-              ? "เริ่มต้นความสนุก"
-              : "สมัครสมาชิกทันที"}
+            {isBengali
+              ? "এখনই শুরু করুন"
+              : usesEnjoyHalloweenUi(streamer.slug)
+                ? "เริ่มต้นความสนุก"
+                : "สมัครสมาชิกทันที"}
           </small>
         </span>
         <ChevronRight className="action-arrow" size={20} />
       </AnimatedButton>
 
       <AnimatedButton
-        href={streamer.links.line}
+        href={secondHref}
         external
-        delay={0.05}
         className="action-card action-green"
-        ariaLabel="เพิ่มเพื่อน LINE ติดต่อรับโปรโมชั่น"
+        ariaLabel={
+          isBengali
+            ? "এখনই রেজিস্ট্রেশন করুন"
+            : "เพิ่มเพื่อน LINE ติดต่อรับโปรโมชั่น"
+        }
         onClick={() => {
+          if (streamer.singleCta) {
+            trackLinkClick(streamer.slug, "register");
+            trackEvent("register_click", {
+              streamer_slug: streamer.slug,
+              placement: "cta_row",
+            });
+            trackMetaEvent("Lead", {
+              content_name: "register",
+              streamer_slug: streamer.slug,
+            });
+            return;
+          }
           trackLinkClick(streamer.slug, "line");
           trackEvent("line_click", {
             streamer_slug: streamer.slug,
@@ -73,16 +107,22 @@ export default function CTAButtons({
         <span className="action-shine" aria-hidden="true" />
         <span className="action-ripple" aria-hidden="true" />
         <span className="action-icon">
-          <span className="line-brand-mark" aria-hidden="true">
-            LINE
-          </span>
+          {streamer.singleCta ? (
+            <Gift size={25} />
+          ) : (
+            <span className="line-brand-mark" aria-hidden="true">
+              LINE
+            </span>
+          )}
         </span>
         <span className="action-copy">
-          <strong>ADD LINE</strong>
+          <strong>{streamer.singleCta ? "৫০০ টাকা ফ্রি নিন" : "ADD LINE"}</strong>
           <small>
-            {usesEnjoyHalloweenUi(streamer.slug)
-              ? "รับโปรโมชันที่นี่"
-              : "ติดต่อรับโปรโมชั่น"}
+            {isBengali
+              ? "রেজিস্ট্রেশন করুন"
+              : usesEnjoyHalloweenUi(streamer.slug)
+                ? "รับโปรโมชันที่นี่"
+                : "ติดต่อรับโปรโมชั่น"}
           </small>
         </span>
         <ChevronRight className="action-arrow" size={20} />

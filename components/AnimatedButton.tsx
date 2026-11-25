@@ -1,10 +1,5 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import type { ReactNode } from "react";
-import InteractionLayers from "@/components/InteractionLayers";
-import usePremiumPointer from "@/components/usePremiumPointer";
 import { externalLinkProps } from "@/lib/links";
 
 type AnimatedButtonProps = {
@@ -19,13 +14,12 @@ type AnimatedButtonProps = {
   className: string;
   ariaLabel: string;
   children: ReactNode;
-  delay?: number;
-  lift?: number;
-  hoverScale?: number;
-  tapScale?: number;
   onClick?: () => void;
 };
 
+/** Plain link/anchor — no entrance animation, hover spring, pointer-tilt or
+ * glow layer. Hover/tap feedback (if any) is plain CSS (:hover/:active) on
+ * `className`, not JS. */
 export default function AnimatedButton({
   href,
   external = false,
@@ -33,48 +27,16 @@ export default function AnimatedButton({
   className,
   ariaLabel,
   children,
-  delay = 0,
-  lift = 2,
-  hoverScale = 1.012,
-  tapScale = 0.97,
   onClick,
 }: AnimatedButtonProps) {
-  const reduceMotion = useReducedMotion();
-  const pointer = usePremiumPointer({
-    strength: 0.076 + lift * 0.006,
-    tilt: 2.6,
-  });
-  const interactiveClassName = `${className} premium-interactive`.trim();
-  const motionProps = {
-    initial: reduceMotion ? false : { opacity: 0, y: 14, scale: 0.98 },
-    whileInView: { opacity: 1, y: 0, scale: 1 },
-    viewport: { once: true, margin: "-20px" },
-    whileHover: reduceMotion
-      ? undefined
-      : { scale: hoverScale, y: -lift },
-    whileFocus: reduceMotion ? undefined : { scale: 1.006, y: -1 },
-    whileTap: reduceMotion ? undefined : { scale: tapScale, y: 0 },
-    transition: {
-      delay: reduceMotion ? 0 : delay,
-      type: "spring" as const,
-      stiffness: 460,
-      damping: 30,
-      mass: 0.58,
-    },
-  };
-
   if (external) {
     const linkProps = sameTab
       ? { href: href || undefined, rel: "noopener" }
       : externalLinkProps(href);
     return (
-      <motion.a
+      <a
         {...linkProps}
-        {...motionProps}
-        style={pointer.style}
-        onPointerMove={pointer.onPointerMove}
-        onPointerLeave={pointer.onPointerLeave}
-        className={interactiveClassName}
+        className={className}
         aria-label={ariaLabel}
         onClick={(event) => {
           if (!href) {
@@ -84,29 +46,19 @@ export default function AnimatedButton({
           onClick?.();
         }}
       >
-        <InteractionLayers />
         {children}
-      </motion.a>
+      </a>
     );
   }
 
   return (
-    <motion.div
-      {...motionProps}
-      style={pointer.style}
-      onPointerMove={pointer.onPointerMove}
-      onPointerLeave={pointer.onPointerLeave}
-      className="animated-button-wrap"
+    <Link
+      href={href}
+      className={className}
+      aria-label={ariaLabel}
+      onClick={onClick}
     >
-      <Link
-        href={href}
-        className={interactiveClassName}
-        aria-label={ariaLabel}
-        onClick={onClick}
-      >
-        <InteractionLayers />
-        {children}
-      </Link>
-    </motion.div>
+      {children}
+    </Link>
   );
 }

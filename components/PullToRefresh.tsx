@@ -3,7 +3,11 @@
 import { RotateCw } from "lucide-react";
 import { useEffect, useRef } from "react";
 
-export default function PullToRefresh() {
+export default function PullToRefresh({
+  isBengali = false,
+}: {
+  isBengali?: boolean;
+}) {
   const indicatorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -78,7 +82,7 @@ export default function PullToRefresh() {
       aria-live="polite"
     >
       <RotateCw size={17} />
-      <span>ดึงเพื่อรีเฟรช</span>
+      <span>{isBengali ? "রিফ্রেশ করতে টানুন" : "ดึงเพื่อรีเฟรช"}</span>
     </div>
   );
 }

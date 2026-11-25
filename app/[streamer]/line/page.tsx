@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import LineOnlyExperience from "@/components/LineOnlyExperience";
-import { getStreamerBySlug, STREAMER_SLUGS } from "@/data/streamers";
+import {
+  getStreamerBySlug,
+  streamerRoute,
+  STREAMER_SLUGS,
+} from "@/data/streamers";
 
 type LinePageProps = {
   params: Promise<{ streamer: string }>;
@@ -37,6 +41,10 @@ export default async function StreamerLineOnlyPage({
   const streamer = getStreamerBySlug(slug);
 
   if (!streamer || streamer.slug === "nexplay") notFound();
+  // No LINE link to send ad traffic to for singleCta streamers (e.g.
+  // Slade) — nothing links here, but redirect home in case the URL is
+  // reached directly.
+  if (streamer.singleCta) redirect(streamerRoute(streamer, ""));
 
   // heroSlides carries marketing copy (e.g. the shared "rewards" slide
   // mentions "เครดิตฟรี") that this page never renders but that would

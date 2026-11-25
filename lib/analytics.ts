@@ -52,18 +52,15 @@ export type AnalyticsEventName = keyof AnalyticsEventMap;
 /** One GA4 property per streamer, so each can later move to its own domain without losing history. */
 const GA4_MEASUREMENT_IDS: Record<StreamerSlug, string> = {
   nexplay: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_NEXPLAY?.trim() ?? "",
-  holden: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_HOLDEN?.trim() ?? "",
   lily: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_LILLY?.trim() ?? "",
-  ivy: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_IVY?.trim() ?? "",
   lilin: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_LILIN?.trim() ?? "",
   william: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_WILLIAM?.trim() ?? "",
   ammy: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_AMMY?.trim() ?? "",
   zen: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_ZEN?.trim() ?? "",
-  lham: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_LHAM?.trim() ?? "",
-  kim: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_KIM?.trim() ?? "",
   grace: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_GRACE?.trim() ?? "",
   miguel: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_MIGUEL?.trim() ?? "",
   top: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_TOP?.trim() ?? "",
+  slade: process.env.NEXT_PUBLIC_GA4_MEASUREMENT_ID_SLADE?.trim() ?? "",
 };
 
 export function getMeasurementId(slug: StreamerSlug): string {

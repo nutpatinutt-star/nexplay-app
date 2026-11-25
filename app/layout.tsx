@@ -6,14 +6,26 @@ import AppFrame from "@/components/AppFrame";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import InAppBrowserBanner from "@/components/InAppBrowserBanner";
 import MetaPixel from "@/components/MetaPixel";
+import { getStreamerBySlug } from "@/data/streamers";
 import "./globals.css";
 import "./streamer-enjoy-ui.generated.css";
 
+// preload: false on these two — Next.js otherwise injects <link rel="preload">
+// for every weight of every font declared in this root layout, for EVERY
+// route, regardless of whether that route's CSS ever resolves to it. Bengali
+// pages (Slade) never use either font (app/globals.css redirects both to
+// Outfit under their app-shell scope) and were still force-downloading all 9
+// weight files — ~140KB wasted on a page with zero Thai text. Thai pages
+// still get both fonts exactly as before: they're referenced in the very
+// first stylesheet the browser parses, so the normal CSS-driven fetch starts
+// just as early as the preload hint did — this only removes the forced
+// fetch for pages that never reference them.
 const kanit = Kanit({
   subsets: ["latin", "thai"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-kanit",
   display: "swap",
+  preload: false,
 });
 
 const notoSansThai = Noto_Sans_Thai({
@@ -21,6 +33,7 @@ const notoSansThai = Noto_Sans_Thai({
   weight: ["400", "500", "600", "700"],
   variable: "--font-noto-thai",
   display: "swap",
+  preload: false,
 });
 
 const outfit = Outfit({
@@ -85,16 +98,26 @@ export default async function RootLayout({
 }) {
   const headerList = await headers();
   const streamerSlug = headerList.get("x-streamer-slug");
+  const htmlLang =
+    (streamerSlug && getStreamerBySlug(streamerSlug)?.locale) || "th";
+  // Kanit and Noto Sans Thai are preloaded by Next.js for every page that
+  // references their .variable in the rendered output — there's no way to
+  // opt a single route out short of not rendering the class at all. Bengali
+  // pages (Slade) have zero Thai text and already redirect every
+  // var(--font-kanit)/var(--font-noto-thai) usage to Outfit via CSS
+  // (app/globals.css), so dropping the classes here stops the browser from
+  // preloading ~9 extra font-weight files it would never actually use.
+  const isBengali = htmlLang === "bn";
+  const fontClassName = isBengali
+    ? outfit.variable
+    : `${kanit.variable} ${notoSansThai.variable} ${outfit.variable}`;
 
   return (
-    <html
-      lang="th"
-      className={`${kanit.variable} ${notoSansThai.variable} ${outfit.variable}`}
-    >
+    <html lang={htmlLang} className={fontClassName}>
       <body>
         <GoogleAnalytics initialStreamerSlug={streamerSlug} />
         <MetaPixel />
-        <InAppBrowserBanner />
+        <InAppBrowserBanner initialStreamerSlug={streamerSlug} />
         <AppFrame initialStreamerSlug={streamerSlug}>{children}</AppFrame>
       </body>
     </html>

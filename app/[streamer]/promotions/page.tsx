@@ -20,12 +20,17 @@ export async function generateMetadata({
   const { streamer: slug } = await params;
   const streamer = getStreamerBySlug(slug);
 
-  return streamer && streamer.slug !== "nexplay"
+  if (!streamer || streamer.slug === "nexplay") return {};
+
+  return streamer.locale === "bn"
     ? {
+        title: `${streamer.name} অফার`,
+        description: `${streamer.name} এর সদস্যদের জন্য সকল অফার ও সুবিধা`,
+      }
+    : {
         title: `โปรโมชั่น ${streamer.name}`,
         description: `รวมโปรโมชั่นและสิทธิพิเศษสำหรับผู้ติดตาม ${streamer.name}`,
-      }
-    : {};
+      };
 }
 
 export default async function StreamerPromotionsPage({
